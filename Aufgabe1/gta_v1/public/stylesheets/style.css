@@ -145,29 +145,27 @@ a {
 /* ### TODO ### Styles for Tagging component */
 
 .main_tagging {
-  flex: 1;
+  display: flex;
   flex-direction: column;
-  gap: 20px;
+  flex: 1;
   min-width: 300px;
   margin: 10px;
   padding: 20px;
   border: 1px solid var(--border-color);
   border-radius: 10px;
-  background-color: white;
+  background-color: #f7f7f7;
 }
 
 .main_tagging label,
 .main_tagging input,
 .main_tagging button {
   display: block;
-  width: 100%;
+  width: calc(100% - 20%);
   margin-bottom: 10px;
 }
 
 input[type= "text"] {
-  width: 100%;
   padding: 10px;
-  margin-bottom: 10px;
   border: 1px solid #cdcdcd;
   border-radius: 5px;
 }
@@ -176,13 +174,15 @@ input[type= "text"] {
 /* ### TODO ### Styles for Discovery component */
 
 .main_discovery {
+  display: flex;
+  flex-direction: column;
   flex: 1;
   min-width: 300px;
   margin: 10px;
   padding: 20px;
   border: 1px solid var(--border-color);
   border-radius: 10px;
-  background-color: #efefef;
+  background-color: #f7f7f7;
 }
 
 .discovery_wrapper {
@@ -229,13 +229,6 @@ input[type= "text"] {
 
 .main_tagging,
 .main_discovery {
-  width: 90%; 
-  flex: 1;
+  width: 90%;
   min-width: 300px;
-  margin: 10px;
-  padding: 20px;
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  background-color: #f7f7f7;
-  }
 }
