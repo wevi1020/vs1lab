@@ -146,6 +146,8 @@ a {
 
 .main_tagging {
   flex: 1;
+  flex-direction: column;
+  gap: 10px;
   min-width: 300px;
   margin: 10px;
   padding: 20px;
@@ -163,7 +165,9 @@ a {
 }
 
 input[type= "text"] {
-  padding: 8px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
   border: 1px solid #cdcdcd;
   border-radius: 5px;
 }
@@ -192,6 +196,7 @@ input[type= "text"] {
   background-color: #f0f0f0;
   padding: 10px;
   border-radius: 5px;
+  border: 1px solid var(--border-color);
 }
 
 .discovery_map {
@@ -215,6 +220,7 @@ input[type= "text"] {
 @media (max-width: 600px) {
 .main{
   flex-direction: column;
+  align-items: center;
 }
 
 .discovery_wrapper {
@@ -223,6 +229,13 @@ input[type= "text"] {
 
 .main_tagging,
 .main_discovery {
-  min-width: 100%;
+  width: 90%; 
+  flex: 1;
+  min-width: 300px;
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background-color: #f0f0f0;
   }
 }
