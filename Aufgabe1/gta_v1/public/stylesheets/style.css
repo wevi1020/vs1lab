@@ -189,6 +189,9 @@ input[type= "text"] {
 
 .discovery_taglist {
   flex: 1;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .discovery_map {
