@@ -208,7 +208,7 @@ input[type= "text"] {
 
 .footer {
   background-color: #444;
-  color: var(--gray-color);
+  color: white;
   text-align: center;
   padding: 10px;
   margin-top: auto;
