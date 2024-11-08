@@ -147,7 +147,7 @@ a {
 .main_tagging {
   flex: 1;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
   min-width: 300px;
   margin: 10px;
   padding: 20px;
@@ -236,6 +236,6 @@ input[type= "text"] {
   padding: 20px;
   border: 1px solid var(--border-color);
   border-radius: 10px;
-  background-color: #f0f0f0;
+  background-color: #f7f7f7;
   }
 }
