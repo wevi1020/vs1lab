@@ -206,6 +206,15 @@ input[type= "text"] {
   text-align: center;
   justify-content: center;
 }
+#mapView {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.discovery_map span {
+  display: inline-block;
+  font-weight: bold;
+}
 
 /* ### TODO ### Styles for Footer Component */
 
