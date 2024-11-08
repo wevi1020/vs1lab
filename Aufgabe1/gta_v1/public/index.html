@@ -24,6 +24,8 @@
     <main class="main">
         <!--Tagging Section-->
         <section class="main__tagging tagging">
+            <div class="row">
+                <div class="col-12">
             <h2>Tagging</h2>
 
             <!-- ############### VS1Lab 1a Form 1 Start -->
@@ -32,29 +34,43 @@
                 <fieldset>
                     
                     <legend> Erstelle hier ein GeoTag </legend>
+
+                    <div class="row">
+                        <div class="col-6">
     
                     <label for="latitude">Latitude:</label>
                     <input type="text" id="latitude" name= "latitude" value="48.9973" readonly/>
-    
+                        </div>
+                        <div class="col-6">
                     <label for="longitude">Longitude:</label>
                     <input type="text" id="longitude" name="longitude" value="21.2392" readonly/>
-    
+                        </div>
+                        </div>
+
+                        <div class="row">
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name" maxlength="10" required placeholder="Name">
-    
+                            </div>
+                            <div class="col-6">
                     <label for="hashtag">Hashtag:</label>
                     <input type="text" id="hashtag" name="hashtag" pattern="#[A-Za-z0-9]{1,10}">
-    
+                            </div>
+                        </div>
+
                     <button type="submit">Erstellen</button>
     
                     </fieldset>
 
             </form>
+            </div>
+        </div>
             <!-- ############### VS1Lab 1a Form 1 End -->
 
         </section>
                     <!--Discovery Section-->
         <section class="main__discovery discovery">
+            <div class="row">
+                <div class="col-12">
             <h2 class="discovery__title">Discovery</h2>
 
             <!-- ############### VS1Lab 1a Form 2 Start -->
@@ -63,9 +79,12 @@
                 <fieldset>
                     <legend>Suche GeoTags</legend>
 
+                    <div class="row">
+                        <div class="col-12">
                     <label for="searchterm">Suchbegriff:</label>
                     <input for="text"  id="searchterm" name="searchterm" placeholder="Suchbegriff hier eingeben" required>
-
+                        </div>
+                    </div>
                     <input type="hidden" id="latitude" name="latitude" value="48.9973">
                     <input type="hidden" id="longitude" name="longitude" value="21.2392">
 
@@ -86,6 +105,8 @@
                 <div id="map" class="discovery__map">
                     <img src="./images/mapview.jpg" alt="a map with locations" id="mapView" />
                     <span>Result map</span>
+                </div>
+            </div>
                 </div>
             </div>
         </section>
