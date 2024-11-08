@@ -47,7 +47,7 @@ a {
 /* ### TODO ### Styles for other HTML elements */
 
 .header {
-  background-color: red;
+  background-color: blue;
   color: black;
   display: flex;
   align-items: center;
