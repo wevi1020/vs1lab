@@ -210,6 +210,7 @@ input[type= "text"] {
 #mapView {
   display: inline-block;
   margin-right: 10px;
+  height: auto;
 }
 
 .discovery_map span {
