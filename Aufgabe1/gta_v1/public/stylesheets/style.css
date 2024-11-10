@@ -185,7 +185,7 @@ a {
 
 /* ### TODO ### Styles for Discovery component */
 
-.main_discovery {
+.main__discovery {
   display: flex;
   flex-direction: column;
   flex: 1;
