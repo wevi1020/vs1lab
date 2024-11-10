@@ -65,7 +65,7 @@ a {
 }
 
 .header__navigation a {
-  color: black;
+  color: var(--link-color);
   text-decoration: none;
   margin: 0 10px;
 }
