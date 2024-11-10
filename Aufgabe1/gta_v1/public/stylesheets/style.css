@@ -207,10 +207,17 @@ a {
 .discovery__taglist {
   flex: 1;
   padding: 10px;
-  border-radius: 5px;
-  border: 1px solid var(--border-color)
+  background-color: var(--background-color);
+  
+  
 }
-
+.discovery__taglist li {
+  padding: 20px;
+  background-color: var(--border-color);
+  color: var(--link-color);
+  min-width: 300px;
+  max-width: 600px;
+}
  
 
 
