@@ -200,6 +200,16 @@ a {
   padding: 10px ;
 }
 
+.main__discovery button {
+  display: block;
+  width: 78.5%;
+  margin: 10px;
+  margin-left: 25px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid var(--border-color);
+}
+
 
 
 .discovery__wrapper {
