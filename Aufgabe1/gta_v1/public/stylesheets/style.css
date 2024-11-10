@@ -155,6 +155,7 @@ a {
   border: 1px solid var(--border-color);
   border-radius: 10px;
   background-color: #f7f7f7;
+  font-weight: bold;
 }
 
 .main_tagging label,
