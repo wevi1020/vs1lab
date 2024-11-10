@@ -29,7 +29,7 @@
     <br></br>
     <form id="tag-form" action="/tagging" method="post">
         <fieldset>
-            <legend>Add a new GeoTag</legend>
+           <br><legend>Add a new GeoTag</legend></br>
 
             <div class="row">
             
@@ -39,30 +39,30 @@
 
                     <input type="text" id="latitude" name="latitude" value="48.9973" readonly>
             
-                </div>
-            </div></br>
+                </div></br>
+            </div>
                   
             <div class="row">   
-                <div>
+                <br><div>
                    
                     <label for="longitude">Longitude:</label>
                     <input type="text" id="longitude" name="longitude" value="21.2392" readonly>
                 
-                </div>
+                </div></br>
             </div>
                                
             <div class="row">
-                <div>
+                <br><div>
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name" maxlength="10" required placeholder="Name">
-                </div>
+                </div></br>
             </div>
 
             <div class="row">
-                <div>
+                <br><div>
                     <label for="hashtag">Hashtag:</label>
                     <input type="text" id="hashtag" name="hashtag" pattern="#[A-Za-z0-9]{1,10}" placeholder="Hashtag">
-                </div>
+                </div></br>
             </div>
 
             <button type="submit">Erstellen</button>
