@@ -227,6 +227,7 @@ a {
   margin: 10px;
   min-width: 300px;
   max-width: 600px;
+  gap: 5px;
 }
 
 
