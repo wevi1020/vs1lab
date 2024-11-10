@@ -194,7 +194,7 @@ a {
 .main__discovery label {
   display: block;
   font-size: 16px;
-  
+  color: var(--border-color);
 }
 
 
