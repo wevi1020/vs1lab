@@ -140,7 +140,8 @@ a {
   display: flex;
   flex-direction: column;       /* Verteilung von oben nach unten*/
   flex: 0.175;
-
+  min-width: 300px;
+  max-width: 600px;
 }
 
 
