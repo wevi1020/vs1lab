@@ -153,7 +153,7 @@ a {
 .main__tagging input,
 .main__tagging button {
   display: block;  
-  width: 100%;                  /* Breite z.B. Button*/
+  width: 50%;                  /* Breite z.B. Button*/
   margin-bottom: 5px;          /*Abstand-unten*/
   padding: 10px;
 
