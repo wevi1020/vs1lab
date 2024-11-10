@@ -144,6 +144,7 @@ a {
   max-width: 600px;             /*s.o.*/
   margin: 30px;                 /* "Abstandsrahmen" außen*/
   padding: 30px;
+  border: 20px solid salmon ;
   
 
 }
