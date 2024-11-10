@@ -27,10 +27,10 @@
         <section class="main__tagging tagging"> <!--Einteilung des Block in "Sektion" Kategorie-->
             
     <h2>Tagging</h2>
-    <br></br>
+    <br>
     <form id="tag-form" action="/tagging" method="post">
         <fieldset>
-            <br></br>
+            <br>
            <legend>Add a new GeoTag</legend>
 
             <div class="row">
@@ -38,12 +38,12 @@
                 <div>
                     
                     <label for="latitude">Latitude:</label>
-                    <br></br>
+                    <br>
                     <input type="text" id="latitude" name="latitude" value="48.9973" readonly>
             
                 </div>
             </div>
-<br></br>                  
+<br>                  
             <div class="row">   
                 <div>
                    
@@ -53,7 +53,7 @@
                 
                 </div>
             </div>
-<br></br>                             
+<br>                             
             <div class="row">
                 <div>
                     <label for="name">Name:</label>
@@ -61,7 +61,7 @@
                     <input type="text" id="name" name="name" maxlength="10" required placeholder="Name">
                 </div>
             </div>
-<br></br>
+<br>
             <div class="row">
                 <div>
                     <label for="hashtag">Hashtag:</label>
@@ -69,7 +69,7 @@
                     <input type="text" id="hashtag" name="hashtag" pattern="#[A-Za-z0-9]{1,10}" placeholder="Hashtag">
                 </div>
             </div>
-<br></br>
+<br>
             <button type="submit">Add Tag</button>
         </fieldset>
     </form>
@@ -81,7 +81,7 @@
         <section class="main__discovery discovery">
             <div class="row">
                 <div class="col-12">
-           <br><h2 class="discovery__title">Discovery</h2></br>
+           <br><h2 class="discovery__title">Discovery</h2>
 
             <!-- ############### VS1Lab 1a Form 2 Start -->
             <form class="discovery__search" id="discoveryFilterForm" action="/discovery" method="post">
@@ -91,34 +91,34 @@
 
                     <div class="row">
                         <div class="col-12">
-                    <br></br>
+                    <br>
                     <label for="searchterm">Search term or keywords:</label>
-                    <br></br>
+                    <br>
                     <input for="text"  id="searchterm" name="searchterm" placeholder="e.g. Karlsruhe" required>
-                    <br></br>
+                    <br>
                         </div>
                     </div>
                     <input type="hidden" id="latitude" name="latitude" value="48.9973">
                     <input type="hidden" id="longitude" name="longitude" value="21.2392">
 
                     <button type="submit">Suchen</button>
-                    <br></br>
+                    <br>
                 </fieldset>
 
             </form>
             <!-- ############### VS1Lab 1a Form 2 End -->
-<br></br>
+<br>
             <div class="discovery__wrapper">
                 <div class="discovery__taglist">
                     <ul class="discovery__results" id="discoveryResults">
-                        <fieldset> <li>Castle (49.01379, 8.404435) #sight</li></fieldset><br></br>
-                            <fieldset> <li>IWI (49.01379, 8.390071) #edu</li></fieldset><br></br>
+                        <fieldset> <li>Castle (49.01379, 8.404435) #sight</li></fieldset><br>
+                            <fieldset> <li>IWI (49.01379, 8.390071) #edu</li></fieldset><br>
                     </ul>
                 </div>
             
                 <div id="map" class="discovery__map">
                     <img src="./images/mapview.jpg" alt="a map with locations" id="mapView" />
-                    <br></br>
+                    <br>
                     <span> Result map </span>
                 </div>
             </div>

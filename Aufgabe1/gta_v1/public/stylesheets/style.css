@@ -109,7 +109,9 @@ a {
 
 /* ### TODO ### Styles for Header Component */
 
-/* ... your code here ... */
+.header {
+  background-color: var(--border-color);  
+}
 
 
 /* ### TODO ### Styles for Main Component */
