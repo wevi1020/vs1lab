@@ -132,7 +132,8 @@ a {
 .main {
   display: flex;
   flex-wrap: wrap;              /*Umbruch der gleichmäßigen Verteilung*/  
-  gap: 20px;           
+  gap: 30px;           
+
 }
 
 
