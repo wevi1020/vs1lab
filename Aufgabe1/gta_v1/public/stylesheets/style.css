@@ -211,18 +211,21 @@ a {
   min-width: 300px;
   max-width: 600px;
 }
-
-.discovery__search { 
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-width: 300px;             
-  max-width: 600px;
-}
-
+ 
 .discovery__search legend {
   margin-left: 25px;
 }
+
+.discovery__search { 
+  display: block;
+  font-size: 16px;
+  color: var(--gray-color);
+  margin-bottom: 5px;
+  margin-left: 15px;
+  padding: 10px ;
+}
+
+
 
 
 /* ### TODO ### Styles for Footer Component */
