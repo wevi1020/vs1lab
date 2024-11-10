@@ -151,7 +151,7 @@ a {
 
 .main__tagging label {
   display: block;
-  
+  font-size: 16px;
 }
 
 .main__tagging input,
