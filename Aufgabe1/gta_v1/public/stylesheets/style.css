@@ -204,7 +204,7 @@ a {
 .discovery__taglist li {
   padding: 20px;
   background-color: var(--border-color);
-  margin: 10px;
+  min-width: 300px;
 }
 
 
