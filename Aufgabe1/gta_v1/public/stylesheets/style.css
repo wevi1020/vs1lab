@@ -154,7 +154,7 @@ a {
 .main__tagging button {
   display: block;  
   width: 100%;                  /* Breite z.B. Button*/
-  margin-bottom: 10px;          /*Abstand-unten*/
+  margin-bottom: 5px;          /*Abstand-unten*/
   padding: 10px;
 
 
