@@ -136,6 +136,8 @@ a {
   padding: 30px;                /* "Abstandsrahmen" innen*/        
 }
 
+/* ### TODO ### Styles for Tagging component */
+
 .main__tagging {
   display: flex;
   flex-direction: column;       /* Verteilung von oben nach unten*/
@@ -147,14 +149,11 @@ a {
   
 }
 
-
-
-
-
-/* ### TODO ### Styles for Tagging component */
-
-/* ... your code here ... */
-
+.main__tagging label,
+.main__tagging input,
+.main__tagging button {
+  display: block;
+}
 
 /* ### TODO ### Styles for Discovery component */
 
