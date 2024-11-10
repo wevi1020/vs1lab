@@ -206,6 +206,7 @@ a {
   background-color: var(--border-color);
   min-width: 300px;
   max-width: 600px;
+  margin-top: 30px;
 
 }
 
