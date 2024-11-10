@@ -206,8 +206,10 @@ a {
   background-color: var(--border-color);
   min-width: 300px;
   max-width: 600px;
-  
+}
 
+.discovery__search {
+  padding: 20px;
 }
 
 
