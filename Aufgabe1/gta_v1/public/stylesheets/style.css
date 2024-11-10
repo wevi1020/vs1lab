@@ -202,7 +202,7 @@ a {
 
 .discovery__wrapper {
   display: flex;
-  
+  gap: 25px;
 }
 
 .discovery__taglist li {
