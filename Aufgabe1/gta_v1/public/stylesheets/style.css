@@ -153,8 +153,10 @@ a {
 .main__tagging input,
 .main__tagging button {
   display: block;  
-  width: 100%;
-           
+  width: 100%;                  /* Breite z.B. Button*/
+  margin-bottom: 20px;
+
+
 }
 
 /* ### TODO ### Styles for Discovery component */
