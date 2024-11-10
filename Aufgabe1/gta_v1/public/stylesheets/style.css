@@ -202,7 +202,7 @@ a {
 }
 
 .discovery__taglist li {
-  flex: 1;
+
   padding: 20px;
   background-color: var(--border-color);
 }
