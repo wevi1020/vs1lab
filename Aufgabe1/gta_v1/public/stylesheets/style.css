@@ -185,7 +185,16 @@ a {
 
 /* ### TODO ### Styles for Discovery component */
 
-/* ... your code here ... */
+.main_discovery {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 300px;
+  max-width: 600px;
+  margin: 20px;
+  padding: 20px;
+  background-color: var(--input-bg);
+}
 
 
 /* ### TODO ### Styles for Footer Component */
