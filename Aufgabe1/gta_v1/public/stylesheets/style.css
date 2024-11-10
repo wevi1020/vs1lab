@@ -155,7 +155,8 @@ a {
   display: block;  
   width: 100%;                  /* Breite z.B. Button*/
   margin-bottom: 5px;          /*Abstand-unten*/
-  padding: 10px;
+  padding: 10px;                /*Input/Label/Button Abstand innen*/
+  font-size: 16px;
 
 
 }
