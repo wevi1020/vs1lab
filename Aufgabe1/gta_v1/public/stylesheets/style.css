@@ -157,7 +157,10 @@ a {
   padding: 10px ;
 }
 
-.main__tagging input,
+.main__tagging input {
+  padding: 10px;
+}
+
 .main__tagging button {
   display: block;  
   width: 100%;                  /* Breite z.B. Button*/
