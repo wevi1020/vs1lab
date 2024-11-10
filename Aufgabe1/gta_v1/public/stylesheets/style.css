@@ -153,6 +153,7 @@ a {
   display: block;
   font-size: 16px;
   color: var(--gray-color);
+  margin-bottom: 10px;
 }
 
 .main__tagging input,
