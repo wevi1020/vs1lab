@@ -230,8 +230,7 @@ a {
 }
 
 .discovery__map {
-  display: flex;
-  flex: 1;
+  
   margin: 10px;
 }
 
