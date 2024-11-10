@@ -162,8 +162,8 @@ a {
 .main_tagging button {
   display: block;
   width: calc(100% - 20%);
-  margin-bottom: 20
-  px;
+  margin-bottom: 20px;
+  padding: 10px;
 }
 
 input[type= "text"] {
