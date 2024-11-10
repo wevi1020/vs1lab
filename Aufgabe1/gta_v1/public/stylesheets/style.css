@@ -191,9 +191,9 @@ a {
   flex: 1;
   min-width: 300px;
   max-width: 600px;
-  margin: 20px;
-  padding: 20px;
-  background-color: var(--input-bg);
+  margin: 30px;
+  padding: 30px;
+
 }
 
 
