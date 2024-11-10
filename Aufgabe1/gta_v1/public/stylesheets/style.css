@@ -152,6 +152,7 @@ a {
 .main__tagging label {
   display: block;
   font-size: 16px;
+  color: var(--gray-color);
 }
 
 .main__tagging input,
