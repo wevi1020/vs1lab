@@ -133,7 +133,7 @@ a {
   display: flex;
   flex-wrap: wrap;              /*Umbruch der gleichmäßigen Verteilung*/  
   gap: 30px;                    /* "Lücke" nach rechts*/
-  padding: 30px;                /* "Abstandsrahmen" um den Inhalt */        
+  padding: 30px;                /* "Abstandsrahmen" innen*/        
 }
 
 .main__tagging {
@@ -142,7 +142,9 @@ a {
   flex: 0.175;
   min-width: 300px;             /*Minimale und Maximale Größenanpassungen für verschieden Bildschirme*/
   max-width: 600px;             /*s.o.*/
-  margin: 30px;
+  margin: 30px;                 /* "Abstandsrahmen" außen*/
+  padding: 30px;                /* "Abstandsrahmen" innen*/
+
 }
 
 
