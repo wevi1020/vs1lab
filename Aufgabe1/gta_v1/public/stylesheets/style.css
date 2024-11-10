@@ -110,16 +110,20 @@ a {
 /* ### TODO ### Styles for Header Component */
 
 .header {
-background-color: var(--border-color);  
-display: flex;                           /*Gleichmäßige Verteilung von Elementen*/
-align-items: center;
-justify-content: space-between;
-padding: 20px;
+  background-color: var(--border-color);  
+  display: flex;                           /*Gleichmäßige Verteilung von Elementen*/
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
 }
 
 .header__image {
   width: 40px;        /*Logo*/
   height: 40px;
+}
+
+.header__title {
+  font-size: 24px;
 }
 
 
