@@ -202,7 +202,8 @@ a {
 
 .main__discovery button {
   display: block;
-  width: 78.5%;
+  width: 50%;
+  
   margin: 10px;
   margin-left: 25px;
   padding: 10px;
