@@ -205,6 +205,7 @@ a {
   padding: 20px;
   background-color: var(--border-color);
   min-width: 300px;
+  max-width: 600px;
 }
 
 
