@@ -191,6 +191,10 @@ a {
   margin-bottom: 5px;
 }
 
+.main__discovery label {
+  display: block;
+}
+
 
 
 .discovery__wrapper {
