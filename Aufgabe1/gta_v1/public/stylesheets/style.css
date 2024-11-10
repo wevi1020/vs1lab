@@ -207,7 +207,7 @@ a {
 .discovery__taglist {
   flex: 1;
   padding: 10px;
-  background-color: var(--border-color);
+  background-color: var(--background-color);
   border-radius: 5px;
   border: 1px solid var(--border-color)
 }
