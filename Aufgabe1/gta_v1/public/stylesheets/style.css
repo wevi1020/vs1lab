@@ -232,7 +232,6 @@ a {
 .discovery__map {
   display: flex;
   flex: 1;
-  justify-content: center;
   margin: 10px;
 }
 
