@@ -154,6 +154,7 @@ a {
   font-size: 16px;
   color: var(--gray-color);
   margin-bottom: 5px;
+  padding: 10px ;
 }
 
 .main__tagging input,
