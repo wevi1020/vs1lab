@@ -223,7 +223,8 @@ a {
 
 .discovery__map {
   
-  margin: 5px;
+  margin: 10px;
+  margin-right: 5px;
   min-width: 300px;
   max-width: 600px;
   gap: 5px;
