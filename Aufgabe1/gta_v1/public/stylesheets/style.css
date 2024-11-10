@@ -201,7 +201,7 @@ a {
   gap: 30px;
 }
 
-.discovery__taglist li {
+.discovery__taglist  {
   flex: 1;
   padding: 20px;
   background-color: var(--border-color);
