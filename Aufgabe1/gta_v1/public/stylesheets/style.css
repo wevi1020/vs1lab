@@ -201,7 +201,7 @@ a {
   gap: 30px;
 }
 
-.discovery_taglist li {
+.discovery__taglist li {
   flex: 1;
   padding: 20px;
 }
