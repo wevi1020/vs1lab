@@ -138,6 +138,7 @@ a {
 
 .main__tagging {
   display: flex;
+  flex-direction: column;
 }
 
 
