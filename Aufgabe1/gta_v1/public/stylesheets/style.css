@@ -212,9 +212,7 @@ a {
   max-width: 600px;
 }
  
-.discovery__search legend {
-  margin-left: 25px;
-}
+
 
 .discovery__search { 
   display: block;
@@ -223,6 +221,10 @@ a {
   margin-bottom: 5px;
   margin-left: 15px;
   padding: 10px ;
+}
+
+.discovery__search legend {
+  margin-left: 25px;
 }
 
 
