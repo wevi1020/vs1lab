@@ -218,10 +218,10 @@ a {
   flex: 1;
   min-width: 300px;             
   max-width: 600px;
-
 }
-.discovery__search legend {
 
+.discovery__search legend {
+  margin-left: 15px;
 }
 
 
