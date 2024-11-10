@@ -157,6 +157,7 @@ a {
   margin-bottom: 5px;          /*Abstand-unten*/
   padding: 10px;                /*Input/Label/Button Abstand innen*/
   font-size: 16px;
+  border: 1px solid var(--border-color);
 
 
 }
