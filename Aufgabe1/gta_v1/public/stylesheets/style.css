@@ -262,7 +262,11 @@ a {
 
 /* ### TODO ### Styles for Footer Component */
 
-/* ... your code here ... */
+.footer {
+  background-color: var(--border-color);
+  color: black;
+  
+}
 
 
 /* ### TODO ### Media Queries */
