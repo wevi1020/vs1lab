@@ -204,7 +204,13 @@ a {
   display: flex;
   gap: 25px;
 }
-
+.discovery__taglist {
+  flex: 1;
+  padding: 10px;
+  background-color: var(--border-color);
+  border-radius: 5px;
+  border: 1px solid var(--gray-color);
+}
 .discovery__taglist li {
   padding: 20px;
   background-color: var(--border-color);
