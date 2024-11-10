@@ -163,7 +163,7 @@ a {
   display: block;
   width: calc(100% - 20%);
   margin-bottom: 20px;
-  padding-block: 5px;
+  padding-inline: 5px;
 }
 
 input[type= "text"] {
