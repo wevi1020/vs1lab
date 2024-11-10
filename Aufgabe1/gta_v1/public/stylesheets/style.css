@@ -196,6 +196,10 @@ a {
 
 }
 
+.main__discovery h2 {
+  margin-bottom: 10px;
+}
+
 .discovery__wrapper {
   display: flex;
   gap: 30px;
