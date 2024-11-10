@@ -202,6 +202,7 @@ a {
 
 .main__discovery input {
   padding: 10px;
+  margin-left: 25px;
 }
 
 .main__discovery button {
