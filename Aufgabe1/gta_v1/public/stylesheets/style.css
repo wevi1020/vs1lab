@@ -210,9 +210,6 @@ a {
 
 .discovery__search {
   padding: 20px;
-  display: flex;
-  flex-direction: column;       
-  flex: 0.175;
   min-width: 300px;             
   max-width: 600px;             
   margin: 30px;                 
