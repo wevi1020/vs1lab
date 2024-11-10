@@ -132,9 +132,12 @@ a {
 .main {
   display: flex;
   flex-wrap: wrap;              /*Umbruch der gleichmäßigen Verteilung*/  
-  gap: 30px;  
-  padding: 30px;         
+  gap: 30px;                    /* "Lücke" nach rechts*/
+  padding: 30px;                /* "Abstandsrahmen" um den Inhalt */        
+}
 
+.main__tagging {
+  display: flex;
 }
 
 
