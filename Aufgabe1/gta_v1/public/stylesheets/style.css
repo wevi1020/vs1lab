@@ -200,6 +200,10 @@ a {
   padding: 10px ;
 }
 
+.main__discovery input {
+  display: block;
+}
+
 .main__discovery button {
   display: block;
   width: 25%;
