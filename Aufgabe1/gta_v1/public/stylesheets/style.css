@@ -139,7 +139,7 @@ a {
 .main__tagging {
   display: flex;
   flex-direction: column;       /* Verteilung von oben nach unten*/
-  flex: 1;
+  flex: 0.5;
 
 }
 
