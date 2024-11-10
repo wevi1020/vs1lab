@@ -155,7 +155,7 @@ a {
   border: 1px solid var(--border-color);
   border-radius: 10px;
   background-color: #f7f7f7;
-  font-weight: bolder;
+  
 }
 
 .main_tagging label,
@@ -171,6 +171,7 @@ input[type= "text"] {
   padding: 10px;
   border: 1px solid #cdcdcd;
   border-radius: 5px;
+  font-weight: bold;
 }
 
 
