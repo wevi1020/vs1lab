@@ -209,10 +209,11 @@ a {
 }
 
 .discovery__search {
-  min-width: 300px;             
-  max-width: 600px;             
+               
   margin: 20px;                 
   padding: 20px; 
+  min-width: 300px;             
+  max-width: 600px;
 
 }
 
