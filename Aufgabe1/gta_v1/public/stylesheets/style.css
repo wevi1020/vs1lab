@@ -67,7 +67,6 @@ a {
 .header__navigation a {
   color: var(--link-color);
   text-decoration: underline;
-  text-decoration: none;
   margin: 0 10px;
 }
 
