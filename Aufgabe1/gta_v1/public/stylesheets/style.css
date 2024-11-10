@@ -207,10 +207,8 @@ a {
 .discovery__taglist {
   flex: 1;
   padding: 10px;
-  
-  
-  
 }
+
 .discovery__taglist li {
   padding: 20px;
   background-color: var(--border-color);
@@ -219,8 +217,6 @@ a {
   max-width: 600px;
 }
  
-
-
 .discovery__search { 
   display: block;
   font-size: 16px;
@@ -231,6 +227,10 @@ a {
 
 .discovery__search legend {
   margin-left: 25px;
+}
+
+.discovery__map {
+  margin: 10px;
 }
 
 
