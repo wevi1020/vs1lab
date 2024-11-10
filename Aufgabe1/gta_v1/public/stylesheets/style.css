@@ -187,8 +187,7 @@ a {
 
 .main__discovery {
   display: flex;
-  flex-direction: column;
-  flex: 1;
+  flex-wrap: wrap;
   min-width: 300px;
   max-width: 600px;
   margin: 30px;
