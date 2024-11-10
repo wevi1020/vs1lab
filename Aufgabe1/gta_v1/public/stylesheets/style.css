@@ -201,6 +201,11 @@ a {
   gap: 30px;
 }
 
+.discovery_taglist {
+  flex: 1;
+  padding: 10px;
+}
+
 
 /* ### TODO ### Styles for Footer Component */
 
