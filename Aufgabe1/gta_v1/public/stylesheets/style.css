@@ -273,4 +273,22 @@ a {
 
 /* ### TODO ### Media Queries */
 
-/* ... your code here ... */
+@media (max-width: 600px) {     /*Für Bildschirme kleiner als 600px*/
+  .main {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .main__tagging {  /*Rand auf kleineren Bildschirmen*/
+    width: 90%;
+    min-width: 300px;
+  }
+  .main__discovery { /*Verhindert kleine, unlesbare Inhalte*/
+    width: 90%;
+    min-width: 300px;
+  }
+
+  .discovery__wrapper {            /*Ergebnisse werden untereinander angezeigt*/
+    flex-direction: column;
+  }
+}
