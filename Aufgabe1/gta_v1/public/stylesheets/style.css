@@ -111,7 +111,7 @@ a {
 
 .header {
   background-color: var(--border-color);  
-  display: flex;
+  
   align-items: center;
 justify-content: space-between;
 padding: 20px;
