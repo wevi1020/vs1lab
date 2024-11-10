@@ -185,17 +185,18 @@ a {
 
 /* ### TODO ### Styles for Discovery component */
 
-.main__discovery {
 
+
+.main__discovery h2 {
+  margin-bottom: 5px;
+}
+
+.main__discovery {
   min-width: 300px;
   max-width: 600px;
   margin: 25px;                 
   padding: 25px;
 
-}
-
-.main__discovery h2 {
-  margin-bottom: 5px;
 }
 
 .discovery__wrapper {
