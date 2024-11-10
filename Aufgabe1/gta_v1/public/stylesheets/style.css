@@ -214,6 +214,7 @@ a {
   display: block;
   font-size: 16px;
   margin-bottom: 5px;
+  width: 100;
   
   padding: 10px ;
 }
@@ -229,6 +230,8 @@ a {
   max-width: 600px;
   gap: 5px;
 }
+
+
 
 
 
