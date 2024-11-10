@@ -129,7 +129,10 @@ a {
 
 /* ### TODO ### Styles for Main Component */
 
-/* ... your code here ... */
+.main {
+  display: flex;
+  flex-wrap: wrap;
+}
 
 
 /* ### TODO ### Styles for Tagging component */
