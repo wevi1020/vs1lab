@@ -111,14 +111,14 @@ a {
 
 .header {
 background-color: var(--border-color);  
-display: flex;  
+display: flex;                           /*Gleichmäßige Verteilung von Elementen*/
 align-items: center;
 justify-content: space-between;
 padding: 20px;
 }
 
 .header__image {
-  width: 40px;
+  width: 40px;        /*Logo*/
   height: 40px;
 }
 
