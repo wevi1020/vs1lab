@@ -159,6 +159,7 @@ a {
 
 .main__tagging input {
   padding: 10px;
+  align-items: center;
 }
 
 .main__tagging button {
