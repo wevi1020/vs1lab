@@ -153,6 +153,10 @@ a {
   margin-left: 25px;
 }
 
+.main__tagging h2 {
+  margin: 10px;
+}
+
 .main__tagging label {
   display: block;
   font-size: 16px;
