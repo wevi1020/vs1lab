@@ -191,15 +191,7 @@ a {
   margin-bottom: 5px;
 }
 
-.main__discovery {
-  display: flex;
-  flex-direction: column;
-  min-width: 300px;
-  max-width: 600px;
-  margin: 25px;                 
-  padding: 25px;
 
-}
 
 .discovery__wrapper {
   display: flex;
