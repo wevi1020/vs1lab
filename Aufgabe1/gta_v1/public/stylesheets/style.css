@@ -160,6 +160,7 @@ a {
 .main__tagging input {
   padding: 10px;
   margin: 10px;
+  margin-left: 5px;
 }
 
 .main__tagging button {
