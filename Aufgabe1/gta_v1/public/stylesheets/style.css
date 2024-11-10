@@ -111,8 +111,9 @@ a {
 
 .header {
   background-color: var(--border-color);  
-  color: black;
-  
+  display: flex;
+  align-items: center;
+
 }
 
 
