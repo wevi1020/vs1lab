@@ -149,6 +149,10 @@ a {
   
 }
 
+.main__tagging label {
+  display: block;
+  
+}
 
 .main__tagging input,
 .main__tagging button {
