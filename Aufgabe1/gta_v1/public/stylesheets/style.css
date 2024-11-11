@@ -154,14 +154,14 @@ a {
 }
 
 .main__tagging h2 {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .main__tagging label {
   display: block;
   font-size: 16px;
   color: var(--gray-color);
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   margin-left: 15px;
   padding: 10px ;
 }
