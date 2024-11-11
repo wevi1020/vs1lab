@@ -146,7 +146,7 @@ a {
   max-width: 600px;             /*s.o.*/
   margin: 30px;                 /* "Abstandsrahmen" außen*/
   padding: 30px;                /* "Abstandsrahmen" innen*/
-  margin-right: 10px;  
+  margin-left: 10px;  
 }
 
 .main__tagging legend {
