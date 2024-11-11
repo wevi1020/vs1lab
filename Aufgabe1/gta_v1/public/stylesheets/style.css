@@ -287,6 +287,10 @@ a {
     min-width: 300px;
   }
 
+  .discovery__map {
+    max-width: 300px;
+  }
+
   .discovery__wrapper {            /*Ergebnisse werden untereinander angezeigt*/
     flex-direction: column;
   }
