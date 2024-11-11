@@ -151,7 +151,6 @@ a {
 
 .main__tagging legend {
   margin-left: 25px;
-  margin-top: 0.5px;
 }
 
 .main__tagging h2 {
@@ -190,6 +189,7 @@ a {
 
 .main__discovery h2 {
   margin-bottom: 5px;
+  margin-top: 20px;
 }
 
 .main__discovery label {
