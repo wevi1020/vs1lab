@@ -294,4 +294,9 @@ html {
    .discovery__wrapper {            /*Ergebnisse werden untereinander angezeigt*/
      flex-direction: column;
    }
+
+   #map { 
+      height: 500px;
+    }
+    
  }
