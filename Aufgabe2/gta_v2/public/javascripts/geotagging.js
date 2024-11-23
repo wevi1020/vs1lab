@@ -116,7 +116,36 @@ class MapManager {
  * A function to retrieve the current location and update the page.
  * It is called once the page has been fully loaded.
  */
-// ... your code here ...
+function updateLocation() {
+    LocationHelper.findLocation((locationHelper) => {
+        // Retrieve latitude and longitude from the locationHelper
+        const latitude = locationHelper.latitude;
+        const longitude = locationHelper.longitude;
+
+        // Find the latitude and longitude fields in the forms and update their values
+        const taggingLatitudeField = document.querySelector("#tagging-form input[name='latitude']");
+        const taggingLongitudeField = document.querySelector("#tagging-form input[name='longitude']");
+        const discoveryLatitudeField = document.querySelector("#discovery-form input[name='latitude']");
+        const discoveryLongitudeField = document.querySelector("#discovery-form input[name='longitude']");
+
+        if (taggingLatitudeField) taggingLatitudeField.value = latitude;
+        if (taggingLongitudeField) taggingLongitudeField.value = longitude;
+        if (discoveryLatitudeField) discoveryLatitudeField.value = latitude;
+        if (discoveryLongitudeField) discoveryLongitudeField.value = longitude;
+
+        // Update the map with the current location
+        const mapManager = new MapManager();
+        mapManager.initMap(latitude, longitude);
+        mapManager.updateMarkers(latitude, longitude);
+
+        // Remove placeholder elements for the map
+        const imgElement = document.querySelector("img");
+        const pElement = document.querySelector("p");
+
+        if (imgElement) imgElement.remove();
+        if (pElement) pElement.remove();
+    });
+}
 
 // Wait for the page to fully load its DOM content, then call updateLocation
 document.addEventListener("DOMContentLoaded", () => {
