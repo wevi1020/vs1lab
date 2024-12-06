@@ -211,6 +211,12 @@ button {
   color: #666;
 }
 
+.discovery__results {
+  list-style: none; /* Entfernt die Punkte */
+    padding: 0;       /* Entfernt den Standard-Einzug */
+    margin: 0;        /* Entfernt den Standard-Abstand */
+}
+
 
 /* ### TODO ### Styles for Footer Component */
 
