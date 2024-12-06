@@ -42,8 +42,7 @@ const GeoTagStore = require('../models/geotag-store');
 
 // TODO: extend the following route example if necessary
 router.get('/', (req, res) => {
-  const tagList = store.getNearbyGeoTags(49.013790, 8.390071); // Beispielkoordinaten
-  res.render('index', { taglist: tagList });
+  res.render('index', { taglist: [] }); // Beispiel für eine leere taglist
 });
 
 /**
