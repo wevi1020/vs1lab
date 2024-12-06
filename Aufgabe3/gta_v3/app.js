@@ -24,6 +24,7 @@ const indexRouter = require('./routes/index');
 const app = express();
 
 // Set ejs as the view engine.
+app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Set ejs template folder.
