@@ -41,6 +41,7 @@ const GeoTagStore = require('../models/geotag-store');
  */
 
 // TODO: extend the following route example if necessary
+const store = new GeoTagStore();
 router.get('/', (req, res) => {
   const latitude = req.query.latitude || 49.01379; // Bei der ersten Anfrage leer
   const longitude = req.query.longitude || 8.390071; // Bei der ersten Anfrage leer
