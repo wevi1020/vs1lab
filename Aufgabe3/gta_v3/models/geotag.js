@@ -11,7 +11,12 @@
  */
 class GeoTag {
 
-    // TODO: ... your code here ...
+    constructor(name, latitude, longitude, hashtag) {
+        this.name = name; // Der Name des Ortes
+        this.latitude = latitude; // Breitengrad (z.B. 49.01 für Karlsruhe)
+        this.longitude = longitude; // Längengrad (z.B. 8.39 für Karlsruhe)
+        this.hashtag = hashtag; // Hashtag (z.B. #campus)
+    }
     
 }
 
