@@ -30,6 +30,9 @@ class GeoTagExamples {
             ['Building K', 49.013190, 8.392090, '#campus'],
         ];
     }
+    static populateStore(store) {
+        this.tagList.forEach(tag => store.addGeoTag(new GeoTag(...tag))); // Konvertiert die Liste in GeoTags und fügt sie hinzu.
+    }
 }
 
 module.exports = GeoTagExamples;
