@@ -229,8 +229,8 @@ button {
   background-color: var(--background-color);
   text-align: center;
   border-radius: 1px;
-  border-color: #666;
-  border-style: inset;
+  border-color: var(--border-color);
+  border-style: inset ;
 }
 
 
