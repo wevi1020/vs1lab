@@ -240,9 +240,6 @@ button {
     grid-row: 5 / span 7;
   }
 
-  .discovery__results {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  
   }
 }
