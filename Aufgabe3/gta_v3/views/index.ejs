@@ -40,9 +40,9 @@
                 <fieldset>
                     <legend><b>Add a new GeoTag</b></legend>
                     <div id="label">Latitude:</div>
-                        <div><input id="tagging_latitude" type="text" latitude="lati" value="<%=latitude%>" placeholder="49.01379" disabled/></div>
+                        <div><input id="tagging_latitude" type="text" latitude="lati"  placeholder="49.01379" disabled/></div>
                     <div id="label">Longitude:</div>
-                        <div><input id="tagging_longitude" type="text" longitude="long"  value="<%= longitude %>" placeholder="8.390071" disabled/></div>
+                        <div><input id="tagging_longitude" type="text" longitude="long"   placeholder="8.390071" disabled/></div>
                     <div id="label">Name:</div>
                         <div><input type="text" name="n" maxlength="10" placeholder="e.g Central Berlin" required/></div>
                     <div id="label">Hashtag:</div>
@@ -64,8 +64,8 @@
                         <div><input type="text" search="s" placeholder="e.g. Berlin"/></div>
                     <button type="button" disabled>Search</button>
 
-                    <input type="hidden" id="oolatitude" name="latitude" value="latitude">
-                    <input type="hidden" id="oolongitude" name="longitude" value="= longitude">
+                    <input type="hidden" id="oolatitude" name="latitude" >
+                    <input type="hidden" id="oolongitude" name="longitude" >
 
                 </fieldset>
             </form>
