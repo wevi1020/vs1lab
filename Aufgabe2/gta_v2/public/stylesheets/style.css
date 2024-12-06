@@ -219,12 +219,12 @@ button {
 
 .discovery__results li {
   min-height: 35px;
-  margin-top: 25px;
+  margin-top: 20px;
   margin-left: 15px;
   margin-right: 30px;
   margin-bottom: 10px;
   padding-right: 10px;
-  padding-top: auto;
+  padding-top: ;
   width: 80%;
   color: #00B7FF;
   background-color: var(--background-color);
