@@ -46,7 +46,7 @@
                     <div id="label">Name:</div>
                         <div><input type="text" name="n" maxlength="10" placeholder="e.g Central Berlin" required/></div>
                     <div id="label">Hashtag:</div>
-                        <div><input type="text" hashtag="#" pattern="#[a-z]" maxlength="10" placeholder="e.g #ber"/></div>
+                        <div><input type="text" name="hashtag" pattern="#[a-z]" maxlength="10" placeholder="e.g #ber"/></div>
                     <button type="submit">Add Tag</button>
                 </fieldset>
             </form>
@@ -61,7 +61,7 @@
                 <fieldset>
                     <legend><b>Search</b></legend>
                     <div id="label">Search term or keyword:</div>
-                        <div><input type="text" search="s" placeholder="e.g. Berlin"/></div>
+                        <div><input type="text" search="s"placeholder="e.g. Berlin"/></div>
                     <button type="submit" >Search</button>
 
                     <input type="hidden" id="oolatitude" name="latitude" value="<%= latitude %>" >
