@@ -218,12 +218,13 @@ button {
 }
 
 .discovery__results li {
-  padding: 10px; /* Fügt etwas Innenabstand hinzu */
-  background-color: #f4f4f4; /* Helles Hintergrunddesign */
-  margin-bottom: 5px; /* Abstand zwischen den Listenelementen */
-  border-radius: 5px; /* Abgerundete Ecken */
-  display: flex; /* Optional: Ermöglicht flexible Inhalte */
-  align-items: center; /* Optional: Zentriert den Text vertikal */
+  min-height: 35px;
+  margin-top: 20px;
+  margin-left: 15px;
+  margin-right: 30px;
+  margin-bottom: 10px;
+  padding-right: 10px;
+  width: 80%;
 }
 
 
