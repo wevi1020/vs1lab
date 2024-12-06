@@ -42,7 +42,8 @@ const GeoTagStore = require('../models/geotag-store');
 
 // TODO: extend the following route example if necessary
 router.get('/', (req, res) => {
-  res.render('index', { taglist: [] })
+  const tagList = store.getNearbyGeoTags(49.013790, 8.390071); // Beispielkoordinaten
+  res.render('index', { taglist: tagList });
 });
 
 /**
@@ -60,7 +61,13 @@ router.get('/', (req, res) => {
  * by radius around a given location.
  */
 
-// TODO: ... your code here ...
+router.post('/tagging', (req, res) => {
+  const { name, latitude, longitude, hashtag } = req.body; // Formulardaten auslesen
+  const newTag = new GeoTag(name, parseFloat(latitude), parseFloat(longitude), hashtag); // Neues GeoTag erstellen
+  store.addGeoTag(newTag); // GeoTag im Store speichern
+  const nearbyTags = store.getNearbyGeoTags(parseFloat(latitude), parseFloat(longitude)); // Tags in der Nähe holen
+  res.render('index', { taglist: nearbyTags });
+});
 
 /**
  * Route '/discovery' for HTTP 'POST' requests.
@@ -78,6 +85,15 @@ router.get('/', (req, res) => {
  * by radius and keyword.
  */
 
-// TODO: ... your code here ...
+router.post('/discovery', (req, res) => {
+  const { latitude, longitude, keyword } = req.body; // Koordinaten und Stichwort auslesen
+  const tags = store.searchNearbyGeoTags(
+    parseFloat(latitude),
+    parseFloat(longitude),
+    1, // Suchradius
+    keyword // Optionales Stichwort
+  );
+  res.render('index', { taglist: tags }); // Ergebnisliste anzeigen
+});
 
 module.exports = router;
