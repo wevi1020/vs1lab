@@ -42,6 +42,8 @@ const GeoTagStore = require('../models/geotag-store');
 
 // TODO: extend the following route example if necessary
 router.get('/', (req, res) => {
+  const latitude = req.query.latitude || ''; // Bei der ersten Anfrage leer
+  const longitude = req.query.longitude || ''; // Bei der ersten Anfrage leer
   const exampleTags = [
       { name: 'Castle', latitude: 49.01379, longitude: 8.404435, hashtag: '#sight' },
       { name: 'IWI', latitude: 49.01379, longitude: 8.390071, hashtag: '#edu' }
