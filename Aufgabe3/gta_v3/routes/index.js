@@ -49,7 +49,7 @@ router.get('/', (req, res) => {
       { name: 'Castle', latitude: 49.01379, longitude: 8.404435, hashtag: '#sight' },
       { name: 'IWI', latitude: 49.01379, longitude: 8.390071, hashtag: '#edu' }
   ];
-  res.render('index', { taglist: exampleTags  }); // Übergibt taglist an das Template
+  res.render('index', { taglist: exampleTags, latitude, longitude  }); // Übergibt taglist an das Template
 });
 
 /**
@@ -72,7 +72,7 @@ router.post('/tagging', (req, res) => {
   const newTag = new GeoTag(name, parseFloat(latitude), parseFloat(longitude), hashtag); // Neues GeoTag erstellen
   store.addGeoTag(newTag); // GeoTag im Store speichern
   const nearbyTags = store.getNearbyGeoTags(parseFloat(latitude), parseFloat(longitude)); // Tags in der Nähe holen
-  res.render('index', { taglist: nearbyTags });
+  res.render('index', { taglist: nearbyTags, latitude, longitude });
 });
 
 /**
@@ -99,7 +99,7 @@ router.post('/discovery', (req, res) => {
     1, // Suchradius
     keyword // Optionales Stichwort
   );
-  res.render('index', { taglist: tags }); // Ergebnisliste anzeigen
+  res.render('index', { taglist: tags, latitude, longitude }); // Ergebnisliste anzeigen
 });
 
 module.exports = router;
