@@ -25,8 +25,32 @@
  */
 class InMemoryGeoTagStore{
 
-    // TODO: ... your code here ...
+    #tags = []; // Privates Array: Nur die Methoden dieser Klasse können darauf zugreifen.
 
+    addGeoTag(tag) {
+        this.#tags.push(tag); // Fügt ein neues GeoTag hinzu.
+    }
+
+    removeGeoTag(name) {
+        this.#tags = this.#tags.filter(tag => tag.name !== name); // Löscht GeoTags anhand ihres Namens.
+    }
+
+    getNearbyGeoTags(latitude, longitude, radius = 1) {
+        return this.#tags.filter(tag => {
+            const distance = Math.sqrt(
+                Math.pow(tag.latitude - latitude, 2) + Math.pow(tag.longitude - longitude, 2)
+            );
+            return distance <= radius; // Nur GeoTags, die im Radius liegen.
+        });
+    }
+
+    searchNearbyGeoTags(latitude, longitude, radius = 1, keyword) {
+        return this.getNearbyGeoTags(latitude, longitude, radius).filter(tag =>
+            tag.name.includes(keyword) || tag.hashtag.includes(keyword)
+        );
+    }
 }
+
+
 
 module.exports = InMemoryGeoTagStore
