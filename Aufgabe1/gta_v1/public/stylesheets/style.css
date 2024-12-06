@@ -46,7 +46,40 @@ a {
 
 /* ### TODO ### Styles for other HTML elements */
 
-/* ... your code here ... */
+input {
+  min-height: 35px;
+  margin-top: 5px;
+  margin-left: 15px;
+  margin-right: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 80%;
+}
+
+button {
+  min-height: 35px;
+  margin-top: 20px;
+  margin-left: 15px;
+  margin-right: 30px;
+  margin-bottom: 10px;
+  padding-right: 10px;
+  width: 80%;
+}
+
+#label {
+  margin-top: 10px;
+  margin-left: 15px;
+  margin-right: 30px;
+}
+
+#result {
+  margin-top: 5px;
+  min-height: 50px;
+  width: 100%;
+  color: var(--link-color);
+  text-align: left ;
+  padding-left: 10px;
+}
 
 
 /* Grid styles (no changes required) */
@@ -110,188 +143,96 @@ a {
 /* ### TODO ### Styles for Header Component */
 
 .header {
-  background-color: var(--border-color);  
-  display: flex;                           /*Gleichmäßige Verteilung von Elementen*/
+  padding: 20px;
+  background-color: #f0f0f0;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
-}
+  display: flex;
+} 
 
-.header__image {
-  width: 40px;        /*Logo*/
-  height: 40px;
+/*.header__image {
+  max-width: 50px;
+  min-width: 50px;
+  height: auto;
+  vertical-align: center;
 }
 
 .header__title {
-  font-size: 24px;
+  vertical-align: center;
+  margin-top: 10px;
 }
 
+.header__navigation {
+  vertical-align: center;
+  margin-top: 25px;
+}*/
 
-/* ### TODO ### Styles for Main Component */
-
-.main {
-  display: flex;
-  flex-wrap: wrap;              /*Umbruch der gleichmäßigen Verteilung*/  
-  gap: 30px;                    /* "Lücke" nach rechts*/
-  padding: 30px;                /* "Abstandsrahmen" innen*/        
-}
 
 /* ### TODO ### Styles for Tagging component */
 
-.main__tagging {
-  display: flex;
-  flex-direction: column;       /* Verteilung von oben nach unten*/
-  flex: 0.175;
-  min-width: 300px;             /*Minimale und Maximale Größenanpassungen für verschieden Bildschirme*/
-  max-width: 600px;             /*s.o.*/
-  margin: 30px;                 /* "Abstandsrahmen" außen*/
-  padding: 30px;                /* "Abstandsrahmen" innen*/
-  margin-left: 0.1px;  
+.tagging__titel {
+  grid-column: 1 / span 2;
+  grid-row: 1;
+  margin-top: 20px;
 }
 
-.main__tagging legend {
-  margin-left: 25px;
+#tag-form {
+  grid-column: 1 / span 2;
+  grid-row: 2 / span 11;
 }
 
-.main__tagging h2 {
-  margin-bottom: 10px;
-}
-
-.main__tagging label {
-  display: block;
-  font-size: 16px;
-  color: var(--gray-color);
-  margin-bottom: 5px;
-  margin-left: 15px;
-  padding: 10px ;
-}
-
-.main__tagging input {
-  padding: 10px;
-  margin-left: 25px ;
-}
-
-.main__tagging button {
-  display: block;  
-  width: 78.5%;                  /* Breite z.B. Button*/
-  margin: 10px;          /*Abstand-unten*/
-  margin-left: 25px;
-  padding: 10px;                /*Input/Label/Button Abstand innen*/
-  font-size: 16px;
-  border: 1px solid var(--border-color);
-
-
-}
 
 /* ### TODO ### Styles for Discovery component */
 
-
-
-.main__discovery h2 {
-  margin-bottom: 0px;
-  margin-top: 57px;
-  margin-left: 10px;
+.discovery__title {
+  grid-column: 3 / span 10;
+  grid-row: 1;
+  margin-top: 20px;
 }
 
-.main__discovery label {
-  display: block;
-  font-size: 16px;
-  color: var(--gray-color);
-  margin-bottom: 5px;
-  margin-left: 15px;
-  padding: 10px ;
+.discovery__search {
+  grid-column: 3 / span 10;
+  grid-row: 2 / span 3;
 }
 
-.main__discovery input {
-  padding: 10px;
-  margin-left: 20px;
-}
-
-.main__discovery button {
-  display: block;
-  width: 24%;
-  margin: 10px;
-  margin-left: 19px;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid var(--border-color);
-  color: var(--border-color);
-}
-
-
-
-.discovery__wrapper {
-  display: flex;
-  gap: 25px;
-}
 .discovery__taglist {
-  flex: 1;
-  padding: 10px;
+  grid-column: 1 / span 1;
+  grid-row: 5 / span 7;
 }
 
-.discovery__taglist li {
-  padding: 20px;
-  background-color: var(--border-color);
-  color: var(--link-color);
-  min-width: 300px;
-  max-width: 600px;
+#map {
+  grid-column: 2 / -1;
+  grid-row: 5 / span 7;
+  margin-left: 50px;
+  color: #666;
 }
- 
-.discovery__search { 
-  display: block;
-  font-size: 16px;
-  margin-bottom: 5px;
-  padding: 10px ;
-}
-
-.discovery__search legend {
-  margin-left: 25px;
-}
-
-.discovery__map {
-  
-  margin: 10px;
-  margin-right: 25px;
-  min-width: 300px;
-  max-width: 600px;
-  gap: 5px;
-}
-
 
 
 /* ### TODO ### Styles for Footer Component */
 
 .footer {
-  background-color: var(--border-color);
-  color: black;
-  text-align: center;
-  padding: 20px;
-  margin-top: auto;
+  background-color: #f0f0f0;
+  align-items: center;
+  padding: 30px;
 }
 
 
 /* ### TODO ### Media Queries */
 
-@media (max-width: 600px) {     /*Für Bildschirme kleiner als 600px*/
+@media (width >= 500px) {
   .main {
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto;
+    grid-template-rows: auto auto auto auto auto auto auto auto auto auto auto auto;
+    grid-gap: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
   }
 
-  .main__tagging {  /*Rand auf kleineren Bildschirmen*/
-    width: 90%;
-    min-width: 300px;
-  }
-  .main__discovery { /*Verhindert kleine, unlesbare Inhalte*/
-    width: 90%;
-    min-width: 300px;
-  }
-
-  .discovery__map {
-    max-width: 200px;
-  }
-
-  .discovery__wrapper {            /*Ergebnisse werden untereinander angezeigt*/
-    flex-direction: column;
+  .discovery__wrapper {
+    display: grid;
+    grid-template-columns: 3fr 10fr;
+    grid-column: 3 / span 10;
+    grid-row: 5 / span 7;
   }
 }
