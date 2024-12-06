@@ -228,6 +228,8 @@ button {
   color: #00B7FF;
   background-color: var(--background-color);
   text-align: center;
+  border-radius: 1px;
+  border-color: #666;
 }
 
 
