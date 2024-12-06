@@ -226,7 +226,7 @@ button {
   padding-right: 10px;
   width: 80%;
   color: #00B7FF;
-  background-color: var(--border-color);
+  background-color: var(--background-color);
 }
 
 
