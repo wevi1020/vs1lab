@@ -46,7 +46,7 @@ router.get('/', (req, res) => {
       { name: 'Castle', latitude: 49.01379, longitude: 8.404435, hashtag: '#sight' },
       { name: 'IWI', latitude: 49.01379, longitude: 8.390071, hashtag: '#edu' }
   ];
-  res.render('index', { taglist: [] }); // Übergibt taglist an das Template
+  res.render('index', { taglist: exampleTags  }); // Übergibt taglist an das Template
 });
 
 /**
