@@ -68,10 +68,13 @@ router.get('/', (req, res) => {
  */
 
 router.post('/tagging', (req, res) => {
-  const { name, latitude, longitude, hashtag } = req.body; // Formulardaten auslesen
-  const newTag = new GeoTag(name, parseFloat(latitude), parseFloat(longitude), hashtag); // Neues GeoTag erstellen
-  store.addGeoTag(newTag); // GeoTag im Store speichern
-  const nearbyTags = store.getNearbyGeoTags(parseFloat(latitude), parseFloat(longitude)); // Tags in der Nähe holen
+  const { name, latitude, longitude, hashtag } = req.body;
+  const newTag = new GeoTag(name, parseFloat(latitude), parseFloat(longitude), hashtag);
+  store.addGeoTag(newTag);
+
+  const nearbyTags = store.getNearbyGeoTags(parseFloat(latitude), parseFloat(longitude));
+  console.log("Nearby Tags:", nearbyTags); // Debugging
+
   res.render('index', { taglist: nearbyTags, latitude, longitude });
 });
 
