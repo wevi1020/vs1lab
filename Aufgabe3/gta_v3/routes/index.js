@@ -51,11 +51,11 @@ router.get('/', (req, res) => {
   // Beispiel-Tags nur hinzufügen, wenn der Speicher leer ist
   if (store.getNearbyGeoTags(latitude, longitude, 1000).length === 0) {
       GeoTagExamples.populateStore(store); // Beispiel-Tags laden
-      console.log("Beispiel-Tags wurden geladen:", store.getNearbyGeoTags(latitude, longitude, 100000));
+      console.log("Beispiel-Tags wurden geladen:", store.getNearbyGeoTags(latitude, longitude, 1000));
   }
 
   // Alle Tags aus dem Speicher holen
-  const allTags = store.getNearbyGeoTags(latitude, longitude, 100000);
+  const allTags = store.getNearbyGeoTags(latitude, longitude, 1000);
 
   // Tags an die HTML-Seite übergeben
   res.render('index', { taglist: allTags, latitude, longitude });
@@ -87,7 +87,7 @@ router.post('/tagging', (req, res) => {
   const newTag = new GeoTag(name, parseFloat(latitude), parseFloat(longitude), hashtag);
   store.addGeoTag(newTag); // Speichert das neue GeoTag
 
-  const allTags = store.getNearbyGeoTags(parseFloat(latitude), parseFloat(longitude), 100000); // Alle Tags holen
+  const allTags = store.getNearbyGeoTags(parseFloat(latitude), parseFloat(longitude), 1000); // Alle Tags holen
   console.log("Aktuelle Tags im Speicher:", allTags);
 
   res.render('index', { taglist: allTags, latitude, longitude });
@@ -112,18 +112,26 @@ router.post('/tagging', (req, res) => {
 router.post('/discovery', (req, res) => {
   console.log("Formulardaten:", req.body);
 
-  const { latitude, longitude, keyword } = req.body;
+  // Eingaben aus dem Formular auslesen
+  const latitude = parseFloat(req.body.latitude || 49.01379); // Fallback auf Standardkoordinaten
+  const longitude = parseFloat(req.body.longitude || 8.390071);
+  const keyword = req.body.keyword || ""; // Fallback auf leeren String
+
   console.log("Empfangen: Latitude:", latitude, "Longitude:", longitude, "Keyword:", keyword);
 
-  const tags = store.searchNearbyGeoTags(
-      parseFloat(latitude), // Breitengrad
-      parseFloat(longitude), // Längengrad
-      100000, // Suchradius
-      keyword || "" // Keyword oder leerer String
-  );
+  // Tags im Umkreis suchen (Radius 1000 statt 100000, um realistischer zu sein)
+  const nearbyTags = store.getNearbyGeoTags(latitude, longitude, 1000);
+  console.log("Tags im Umkreis (vor Filterung):", nearbyTags);
 
-  console.log("Gefundene Tags:", tags);
-  res.render('index', { taglist: tags, latitude, longitude });
+  // Falls ein Keyword angegeben ist, die Tags filtern
+  const filteredTags = keyword
+    ? nearbyTags.filter(tag => tag.name.includes(keyword) || tag.hashtag.includes(keyword))
+    : nearbyTags;
+
+  console.log("Gefundene Tags (nach Filterung):", filteredTags);
+
+  // Tags und Koordinaten an die HTML-Seite übergeben
+  res.render('index', { taglist: filteredTags, latitude, longitude });
 });
 
 module.exports = router;
