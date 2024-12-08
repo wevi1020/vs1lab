@@ -117,10 +117,10 @@ router.post('/discovery', (req, res) => {
   const longitude = parseFloat(req.body.longitude || 8.390071);
   const keyword = req.body.keyword || ""; // Fallback auf leeren String
 
-  console.log("Empfangen: Latitude:", latitude, "Longitude:", longitude, "Keyword:", keyword);
+  console.log("Empfangen: Search Latitude:", searchLatitude, "Search Longitude:", searchLongitude, "Keyword:", keyword);
 
   // Tags im Umkreis suchen 
-  const nearbyTags = store.getNearbyGeoTags(latitude, longitude, 1000);
+  const nearbyTags = store.getNearbyGeoTags(searchLatitude, searchLongitude, 1000);
   console.log("Tags im Umkreis (vor Filterung):", nearbyTags);
 
   // Falls ein Keyword angegeben ist, die Tags filtern
@@ -130,8 +130,12 @@ router.post('/discovery', (req, res) => {
 
   console.log("Gefundene Tags (nach Filterung):", filteredTags);
 
+   // Aktuelle Standortkoordinaten an die Seite übergeben
+   const currentLatitude = 49.01379; 
+   const currentLongitude = 8.390071;
+
   // Tags und Koordinaten an die HTML-Seite übergeben
-  res.render('index', { taglist: filteredTags, latitude, longitude });
+  res.render('index', { taglist: filteredTags, latitude: currentLatitude, longitude: currentLongitude, searchLatitude, searchLongitude });
 });
 
 module.exports = router;
