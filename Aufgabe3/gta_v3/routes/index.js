@@ -51,8 +51,7 @@ router.get('/', (req, res) => {
   // Beispiel-Tags nur hinzufügen, wenn der Speicher leer ist
   if (store.getNearbyGeoTags(latitude, longitude, 100).length === 0) {
       GeoTagExamples.populateStore(store); // Beispiel-Tags laden
-      console.log("Beispiel-Tags wurden geladen:", store.getNearbyGeoTags(latitude, longitude, 100));
-  }
+      console.log("Beispiel-Tags im Speicher:", store.getNearbyGeoTags(49.01379, 8.390071, 100));
 
   // Alle Tags aus dem Speicher holen
   const allTags = store.getNearbyGeoTags(latitude, longitude, 100);
