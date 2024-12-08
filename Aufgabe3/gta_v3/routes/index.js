@@ -76,20 +76,18 @@ router.get('/', (req, res) => {
  */
 
 router.post('/tagging', (req, res) => {
-  console.log("Formulardaten:", req.body); // Debugging: Zeigt die empfangenen Daten an.
-  
-  const { name, latitude, longitude, hashtag } = req.body; // Liest die Daten aus dem Formular.
-  
-  // Debugging: Zeigt die empfangenen Werte an.
+  console.log("Formulardaten:", req.body);
+
+  const { name, latitude, longitude, hashtag } = req.body;
   console.log("Empfangen:", name, latitude, longitude, hashtag);
 
   const newTag = new GeoTag(name, parseFloat(latitude), parseFloat(longitude), hashtag);
-  store.addGeoTag(newTag); // Speichert das neue GeoTag.
-  
-  const nearbyTags = store.getNearbyGeoTags(parseFloat(latitude), parseFloat(longitude)); // Holt Nearby-Tags.
-  console.log("Nearby Tags nach Hinzufügen:", nearbyTags); // Debugging: Nearby-Tags anzeigen.
-  
-  res.render('index', { taglist: nearbyTags, latitude, longitude });
+  store.addGeoTag(newTag); // Speichert das neue GeoTag
+
+  const allTags = store.getNearbyGeoTags(parseFloat(latitude), parseFloat(longitude), 100); // Alle Tags holen
+  console.log("Aktuelle Tags im Speicher:", allTags);
+
+  res.render('index', { taglist: allTags, latitude, longitude });
 });
 
 /**
