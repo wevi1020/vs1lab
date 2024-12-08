@@ -74,9 +74,13 @@
             <div class="discovery__wrapper">
                 <div class="discovery__taglist">
                     <ul class="discovery__results" id="discoveryResults">
-                        <% taglist.forEach(tag => { %>
-                            <li><%= tag.name %> (<%= tag.latitude %>, <%= tag.longitude %>) <%= tag.hashtag %></li>
-                        <% }); %>
+                        <% if (taglist && taglist.length > 0) { %>
+                            <% taglist.forEach(tag => { %>
+                                <li><%= tag.name %> (<%= tag.latitude %>, <%= tag.longitude %>) <%= tag.hashtag %></li>
+                            <% }); %>
+                        <% } else { %>
+                            <li>Keine Tags gefunden</li>
+                        <% } %>
                     </ul>
                 </div>
 
