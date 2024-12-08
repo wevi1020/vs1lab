@@ -59,6 +59,7 @@ router.get('/', (req, res) => {
 
   // Tags an die HTML-Seite übergeben
   res.render('index', { taglist: allTags, latitude, longitude });
+  console.log("An die EJS-Datei übergebene Tags:", allTags);
 });
 
 
