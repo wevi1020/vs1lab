@@ -52,6 +52,7 @@
             .bindPopup("Your Location")
             .addTo(this.#markers);
         for (const tag of tags) {
+            console.log("Füge Marker hinzu für:", tag); // Debug-Ausgabe
             L.marker([tag.latitude,tag.longitude], { icon: this.#defaultIcon })
                 .bindPopup(tag.name)
                 .addTo(this.#markers);  
