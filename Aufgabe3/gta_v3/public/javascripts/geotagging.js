@@ -71,12 +71,12 @@ function locationCallBack(helper) {
         console.error("Fehler beim Parsen von data-tags:", e);
     }
     console.log("GeoTags aus data-tags:", dataTags);
-    
+
     // Initialisiere die Karte
     const mng = new MapManager();
     console.log("Karte wird initialisiert mit:", helper.latitude, helper.longitude);
     mng.initMap(helper.latitude, helper.longitude);
-    console.log("GeoTags, die an updateMarkers übergeben werden:", geoTags);
+    console.log("GeoTags, die an updateMarkers übergeben werden:", dataTags);
     mng.updateMarkers(helper.latitude, helper.longitude, dataTags);
     
 }
