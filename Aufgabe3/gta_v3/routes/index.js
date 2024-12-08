@@ -49,7 +49,7 @@ router.get('/', (req, res) => {
       { name: 'Castle', latitude: 49.01379, longitude: 8.404435, hashtag: '#sight' },
       { name: 'IWI', latitude: 49.01379, longitude: 8.390071, hashtag: '#edu' }
   ];
-  console.log("Nearby Tags:", nearbyTags);
+  
   res.render('index', { taglist: exampleTags, latitude, longitude  }); // Übergibt taglist an das Template
 });
 
@@ -75,6 +75,9 @@ router.post('/tagging', (req, res) => {
   const newTag = new GeoTag(name, parseFloat(latitude), parseFloat(longitude), hashtag); // Neues GeoTag erstellen
   store.addGeoTag(newTag); // GeoTag im Store speichern
   const nearbyTags = store.getNearbyGeoTags(parseFloat(latitude), parseFloat(longitude)); // Tags in der Nähe holen
+
+  console.log("Nearby Tags:", nearbyTags);
+
   res.render('index', { taglist: nearbyTags, latitude, longitude });
 });
 
