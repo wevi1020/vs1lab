@@ -45,10 +45,19 @@ class InMemoryGeoTagStore{
         });
     }
 
-    searchNearbyGeoTags(latitude, longitude, radius = 1, keyword) {
-        return this.getNearbyGeoTags(latitude, longitude, radius).filter(tag =>
-            tag.name.includes(keyword) || tag.hashtag.includes(keyword)
-        );
+    searchNearbyGeoTags(latitude, longitude, radius = 1, keyword = "") {
+        const nearbyTags = this.getNearbyGeoTags(latitude, longitude, radius);
+        console.log("Nearby Tags vor Filter:", nearbyTags); // Debugging: Tags im Radius
+        console.log("Keyword:", keyword); // Debugging: Das übergebene Keyword
+    
+        if (keyword) {
+            const filteredTags = nearbyTags.filter(tag =>
+                tag.name.includes(keyword) || tag.hashtag.includes(keyword)
+            );
+            console.log("Gefilterte Tags:", filteredTags); // Debugging: Nach Keyword gefilterte Tags
+            return filteredTags;
+        }
+        return nearbyTags; // Wenn kein Keyword, gebe alle Tags zurück
     }
 }
 
