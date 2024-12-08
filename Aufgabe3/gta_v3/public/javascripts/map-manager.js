@@ -56,7 +56,11 @@
             L.marker([tag.latitude,tag.longitude], { icon: this.#defaultIcon })
             .bindPopup(`${tag.name} ${tag.hashtag}`)
                 .addTo(this.#markers);  
+
         }
+        L.marker([49.01379, 8.390071], { icon: this.#defaultIcon })
+    .bindPopup("Test Marker")
+    .addTo(this.#markers);
     }
 }
 export default MapManager;

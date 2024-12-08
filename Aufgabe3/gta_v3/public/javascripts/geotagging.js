@@ -71,6 +71,7 @@ function locationCallBack(helper) {
     const mng = new MapManager();
     console.log("Karte wird initialisiert mit:", helper.latitude, helper.longitude);
     mng.initMap(helper.latitude, helper.longitude);
+    console.log("GeoTags, die an updateMarkers übergeben werden:", geoTags);
     mng.updateMarkers(helper.latitude, helper.longitude);
     
 }
