@@ -40,13 +40,48 @@
                 <fieldset>
                     <legend><b>Add a new GeoTag</b></legend>
                     <div id="label">Latitude:</div>
-                        <div><input id="tagging_latitude" type="text" latitude="latitude" value="<%= latitude %>"  placeholder="49.01379" readonly/></div>
+                    <div>
+                        <input
+                            id="tagging_latitude"
+                            type="text"
+                            name="latitude"
+                            value="<%= latitude %>"
+                            placeholder="49.01379"
+                            readonly
+                        />
+                    </div>
                     <div id="label">Longitude:</div>
-                        <div><input id="tagging_longitude" type="text" longitude="longitude" value="<%= longitude %>"   placeholder="8.390071" readonly/></div>
+                    <div>
+                        <input
+                            id="tagging_longitude"
+                            type="text"
+                            name="longitude"
+                            value="<%= longitude %>"
+                            placeholder="8.390071"
+                            readonly
+                        />
+                    </div>
                     <div id="label">Name:</div>
-                        <div><input type="text" name="name" maxlength="10" placeholder="e.g Central Berlin" required/></div>
+                    <div>
+                        <input
+                            type="text"
+                            name="name"
+                            maxlength="10"
+                            placeholder="e.g Central Berlin"
+                            required
+                        />
+                    </div>
                     <div id="label">Hashtag:</div>
-                        <div><input type="text" name="hashtag" pattern="^#[a-z]+$" maxlength="10" placeholder="e.g #ber" required/></div>
+                    <div>
+                        <input
+                            type="text"
+                            name="hashtag"
+                            pattern="^#[a-z]+$"
+                            maxlength="10"
+                            placeholder="e.g #ber"
+                            required
+                        />
+                    </div>
                     <button type="submit">Add Tag</button>
                 </fieldset>
             </form>
