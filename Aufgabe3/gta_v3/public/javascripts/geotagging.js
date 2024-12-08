@@ -32,14 +32,27 @@ function updateLocation() {
 
 function locationCallBack(helper) {
     console.log(helper.latitude + ", " + helper.longitude);
+
     document.getElementById("tagging_latitude").value = helper.latitude;
     document.getElementById("tagging_longitude").value = helper.longitude;
     document.getElementById("oolatitude").value = helper.latitude;
     document.getElementById("oolongitude").value = helper.longitude;
 
-    document.getElementById("mapView").remove();
-    document.getElementById("resultMap").remove();
+    // Entferne alte Karten-Elemente, falls vorhanden
+    const mapView = document.getElementById("mapView");
+    const resultMap = document.getElementById("resultMap");
 
+
+    // Sicherstellen, dass die Elemente existieren, bevor sie entfernt werden
+    if (mapView) {
+        console.log("mapView wird entfernt");
+        mapView.remove();
+    }
+    if (resultMap) {
+        console.log("resultMap wird entfernt");
+        resultMap.remove();
+    }
+    
     mng = new MapManager();
     mng.initMap(helper.latitude, helper.longitude);
     mng.updateMarkers(helper.latitude, helper.longitude);
