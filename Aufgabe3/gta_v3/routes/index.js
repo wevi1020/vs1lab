@@ -118,7 +118,7 @@ router.post('/discovery', (req, res) => {
   const tags = store.searchNearbyGeoTags(
       parseFloat(latitude), // Breitengrad
       parseFloat(longitude), // Längengrad
-      1, // Suchradius
+      1000, // Suchradius
       keyword || "" // Keyword oder leerer String
   );
 
