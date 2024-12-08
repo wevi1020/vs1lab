@@ -63,12 +63,15 @@ function locationCallBack(helper) {
 
   // Lese das `data-tags`-Attribut
     const mapElement = document.getElementById("map");
-    const dataTagsString = document.getElementById("map").getAttribute("data-tags");
-    const dataTags = JSON.parse(dataTagsString);
+    const dataTagsString = mapElement.getAttribute("data-tags");
+    let dataTags = [];
+    try {
+        dataTags = JSON.parse(dataTagsString || "[]"); // Konvertiere JSON-String zu Array
+    } catch (e) {
+        console.error("Fehler beim Parsen von data-tags:", e);
+    }
     console.log("GeoTags aus data-tags:", dataTags);
-    const geoTags = JSON.parse(dataTags || "[]"); // Konvertiere JSON-String zu Array
-    console.log("GeoTags aus data-tags:", geoTags);
-
+    
     // Initialisiere die Karte
     const mng = new MapManager();
     console.log("Karte wird initialisiert mit:", helper.latitude, helper.longitude);
