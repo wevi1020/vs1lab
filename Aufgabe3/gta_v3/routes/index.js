@@ -29,6 +29,7 @@ const GeoTag = require('../models/geotag');
  * TODO: implement the module in the file "../models/geotag-store.js"
  */
 // eslint-disable-next-line no-unused-vars
+const GeoTagExamples = require('../models/geotag-examples');
 const GeoTagStore = require('../models/geotag-store');
 
 /**
@@ -47,13 +48,9 @@ router.get('/', (req, res) => {
   const longitude = req.query.longitude || 8.390071;
 
   // Beispiel-Tags nur einmalig hinzufügen
-  if (store.getNearbyGeoTags(latitude, longitude).length === 0) {
-    const exampleTags = [
-      new GeoTag('Castle', 49.01379, 8.404435, '#sight'),
-      new GeoTag('IWI', 49.01379, 8.390071, '#edu'),
-    ];
-    exampleTags.forEach(tag => store.addGeoTag(tag)); // Speichern in GeoTagStore
-  }
+  if (store.getNearbyGeoTags(latitude, longitude, 100).length === 0) {
+    GeoTagExamples.populateStore(store);
+}
 
   const allTags = store.getNearbyGeoTags(latitude, longitude, 100); // Alle Tags holen
   res.render('index', { taglist: allTags, latitude, longitude }); // Render mit allen Tags
