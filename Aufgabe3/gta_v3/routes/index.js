@@ -113,8 +113,8 @@ router.post('/discovery', (req, res) => {
   console.log("Formulardaten:", req.body);
 
   // Eingaben aus dem Formular auslesen
-  const latitude = parseFloat(req.body.latitude || 49.01379); // Fallback auf Standardkoordinaten
-  const longitude = parseFloat(req.body.longitude || 8.390071);
+  const searchLatitude = parseFloat(req.body.latitude || 49.01379); // Fallback auf Standardkoordinaten
+  const searchLongitude = parseFloat(req.body.longitude || 8.390071);
   const keyword = req.body.keyword || ""; // Fallback auf leeren String
 
   console.log("Empfangen: Search Latitude:", searchLatitude, "Search Longitude:", searchLongitude, "Keyword:", keyword);
