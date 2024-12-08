@@ -43,14 +43,20 @@ const GeoTagStore = require('../models/geotag-store');
 // TODO: extend the following route example if necessary
 const store = new GeoTagStore();
 router.get('/', (req, res) => {
-  const latitude = req.query.latitude || 49.01379; // Bei der ersten Anfrage leer
-  const longitude = req.query.longitude || 8.390071; // Bei der ersten Anfrage leer
-  const exampleTags = [
-      { name: 'Castle', latitude: 49.01379, longitude: 8.404435, hashtag: '#sight' },
-      { name: 'IWI', latitude: 49.01379, longitude: 8.390071, hashtag: '#edu' }
-  ];
-  
-  res.render('index', { taglist: exampleTags, latitude, longitude  }); // Übergibt taglist an das Template
+  const latitude = req.query.latitude || 49.01379;
+  const longitude = req.query.longitude || 8.390071;
+
+  // Beispiel-Tags nur einmalig hinzufügen
+  if (store.getNearbyGeoTags(latitude, longitude).length === 0) {
+    const exampleTags = [
+      new GeoTag('Castle', 49.01379, 8.404435, '#sight'),
+      new GeoTag('IWI', 49.01379, 8.390071, '#edu'),
+    ];
+    exampleTags.forEach(tag => store.addGeoTag(tag)); // Speichern in GeoTagStore
+  }
+
+  const allTags = store.getNearbyGeoTags(latitude, longitude, 100); // Alle Tags holen
+  res.render('index', { taglist: allTags, latitude, longitude }); // Render mit allen Tags
 });
 
 
