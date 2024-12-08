@@ -54,19 +54,24 @@
     updateMarkers(latitude, longitude, tags = []) {
         // delete all markers
         this.#markers.clearLayers();
+        console.log("Markers werden gelöscht...");
+
+        // Füge einen Marker für die aktuelle Position hinzu
         L.marker([latitude, longitude], { icon: this.#defaultIcon })
             .bindPopup("Your Location")
             .addTo(this.#markers);
-        for (const tag of tags) {
-            console.log("Füge Marker hinzu für:", tag); // Debug-Ausgabe
-            L.marker([tag.latitude,tag.longitude], { icon: this.#defaultIcon })
-            .bindPopup(`${tag.name} ${tag.hashtag}`)
-                .addTo(this.#markers);  
+            console.log("Marker für die aktuelle Position hinzugefügt:", latitude, longitude);
+
+             // Füge Marker für alle Tags hinzu
+            for (const tag of tags) {
+                console.log("Füge Marker hinzu für:", tag); // Debug-Ausgabe
+                L.marker([tag.latitude,tag.longitude], { icon: this.#defaultIcon })
+                    .bindPopup(`${tag.name} ${tag.hashtag}`)
+                    .addTo(this.#markers);  
 
         }
-        L.marker([49.01379, 8.390071], { icon: this.#defaultIcon })
-    .bindPopup("Test Marker")
-    .addTo(this.#markers);
+        console.log("Alle Marker hinzugefügt.");
+
     }
 }
 export default MapManager;
