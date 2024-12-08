@@ -51,6 +51,7 @@ router.get('/', (req, res) => {
   ];
   res.render('index', { taglist: exampleTags, latitude, longitude  }); // Übergibt taglist an das Template
 });
+console.log("Nearby Tags:", nearbyTags);
 
 /**
  * Route '/tagging' for HTTP 'POST' requests.
