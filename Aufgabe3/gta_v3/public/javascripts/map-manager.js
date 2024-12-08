@@ -54,7 +54,7 @@
         for (const tag of tags) {
             console.log("Füge Marker hinzu für:", tag); // Debug-Ausgabe
             L.marker([tag.latitude,tag.longitude], { icon: this.#defaultIcon })
-                .bindPopup(tag.name)
+            .bindPopup(`${tag.name} ${tag.hashtag}`)
                 .addTo(this.#markers);  
         }
     }
