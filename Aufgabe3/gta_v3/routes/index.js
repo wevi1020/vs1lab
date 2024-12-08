@@ -131,11 +131,17 @@ router.post('/discovery', (req, res) => {
   console.log("Gefundene Tags (nach Filterung):", filteredTags);
 
    // Aktuelle Standortkoordinaten an die Seite übergeben
-   const currentLatitude = 49.01379; 
-   const currentLongitude = 8.390071;
+   const currentLatitude = parseFloat(req.body.latitude || 49.01379); 
+  const currentLongitude = parseFloat(req.body.longitude || 8.390071);
 
   // Tags und Koordinaten an die HTML-Seite übergeben
-  res.render('index', { taglist: filteredTags, latitude: currentLatitude, longitude: currentLongitude, searchLatitude, searchLongitude });
+  res.render('index', {
+     taglist: filteredTags,
+      latitude: currentLatitude,
+      longitude: currentLongitude,
+      searchLatitude,
+      searchLongitude 
+    });
 });
 
 module.exports = router;
