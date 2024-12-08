@@ -49,9 +49,10 @@ router.get('/', (req, res) => {
       { name: 'Castle', latitude: 49.01379, longitude: 8.404435, hashtag: '#sight' },
       { name: 'IWI', latitude: 49.01379, longitude: 8.390071, hashtag: '#edu' }
   ];
+  console.log("Nearby Tags:", nearbyTags);
   res.render('index', { taglist: exampleTags, latitude, longitude  }); // Übergibt taglist an das Template
 });
-console.log("Nearby Tags:", nearbyTags);
+
 
 /**
  * Route '/tagging' for HTTP 'POST' requests.
