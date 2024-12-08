@@ -107,8 +107,9 @@ router.post('/tagging', (req, res) => {
  */
 
 router.post('/discovery', (req, res) => {
-  console.log("Formulardaten:", req.body); // Debugging: Zeigt die Eingaben aus dem Formular
-  const { latitude, longitude, keyword } = req.body; // Formulardaten auslesen
+  console.log("Formulardaten:", req.body);
+
+  const { latitude, longitude, keyword } = req.body;
   console.log("Empfangen: Latitude:", latitude, "Longitude:", longitude, "Keyword:", keyword);
 
   const tags = store.searchNearbyGeoTags(
@@ -118,8 +119,8 @@ router.post('/discovery', (req, res) => {
       keyword || "" // Keyword oder leerer String
   );
 
-  console.log("Gefundene Tags:", tags); // Debugging: Zeigt die gefundenen Tags
-  res.render('index', { taglist: tags, latitude, longitude }); // Ergebnisse an die View senden
+  console.log("Gefundene Tags:", tags);
+  res.render('index', { taglist: tags, latitude, longitude });
 });
 
 module.exports = router;
