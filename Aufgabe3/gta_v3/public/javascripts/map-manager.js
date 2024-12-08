@@ -30,13 +30,19 @@
     * @param {number} zoom The map zoom, defaults to 18
     */
     initMap(latitude, longitude, zoom = 18) {
+        console.log("Initialisiere Karte mit Leaflet...");
+        console.log("Latitude:", latitude, "Longitude:", longitude, "Zoom:", zoom);
         // set up dynamic Leaflet map
         this.#map = L.map('map').setView([latitude, longitude], zoom);
+        console.log("Karte erfolgreich initialisiert:", this.#map);
+
         var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
         L.tileLayer(
             'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; ' + mapLink + ' Contributors'}).addTo(this.#map);
+            console.log("TileLayer hinzugefügt.");
         this.#markers = L.layerGroup().addTo(this.#map);
+        console.log("Marker-Layer hinzugefügt.");
     }
 
     /**
