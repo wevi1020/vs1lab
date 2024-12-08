@@ -119,7 +119,7 @@ router.post('/discovery', (req, res) => {
 
   console.log("Empfangen: Latitude:", latitude, "Longitude:", longitude, "Keyword:", keyword);
 
-  // Tags im Umkreis suchen (Radius 1000 statt 100000, um realistischer zu sein)
+  // Tags im Umkreis suchen 
   const nearbyTags = store.getNearbyGeoTags(latitude, longitude, 1000);
   console.log("Tags im Umkreis (vor Filterung):", nearbyTags);
 
