@@ -56,4 +56,6 @@ class LocationHelper {
             alert(error.message)
         });
     }
+    
 }
+export default LocationHelper;
