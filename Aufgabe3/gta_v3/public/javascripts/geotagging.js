@@ -26,8 +26,24 @@ console.log("The geoTagging script is going to start...");
  */
 import LocationHelper from './location-helper.js';
 import MapManager from './map-manager.js';
+
 function updateLocation() {
+     // Lese die aktuellen Werte der Formularfelder für die Koordinaten
+     const latitudeField = document.getElementById("tagging_latitude").value;
+     const longitudeField = document.getElementById("tagging_longitude").value;
+ 
+     // Überprüfe, ob die Felder leer sind
+     if (!latitudeField || !longitudeField) {
+         console.log("Koordinaten fehlen, GeoLocation API wird verwendet...");
+         // Rufe die GeoLocation API nur auf, wenn die Koordinaten fehlen
     LocationHelper.findLocation(locationCallBack);
+
+} else {
+    console.log("Koordinaten bereits vorhanden, keine GeoLocation API nötig.");
+    // Optional: Rufe die Callback-Funktion direkt mit den vorhandenen Werten auf
+    const helper = new LocationHelper(latitudeField, longitudeField);
+    locationCallBack(helper);
+}
 }
 
 function locationCallBack(helper) {
