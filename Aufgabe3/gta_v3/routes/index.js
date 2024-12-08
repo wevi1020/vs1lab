@@ -58,7 +58,7 @@ router.get('/', (req, res) => {
   const allTags = store.getNearbyGeoTags(latitude, longitude, 1000);
 
   // Tags an die HTML-Seite übergeben
-  res.render('index', { taglist: allTags, latitude, longitude });
+  res.render('index', { taglist: allTags, latitude, longitude, searchLatitude:latitude, searchLongitude:longitude });
   console.log("An die EJS-Datei übergebene Tags:", allTags);
 });
 
@@ -90,7 +90,7 @@ router.post('/tagging', (req, res) => {
   const allTags = store.getNearbyGeoTags(parseFloat(latitude), parseFloat(longitude), 1000); // Alle Tags holen
   console.log("Aktuelle Tags im Speicher:", allTags);
 
-  res.render('index', { taglist: allTags, latitude, longitude });
+  res.render('index', { taglist: allTags, latitude, longitude,  searchLatitude:latitude,  searchLongitude:longitude });
 });
 
 /**
