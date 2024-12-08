@@ -42,18 +42,21 @@ const GeoTagStore = require('../models/geotag-store');
  */
 
 // TODO: extend the following route example if necessary
-const store = new GeoTagStore();
 router.get('/', (req, res) => {
-  const latitude = req.query.latitude || 49.01379;
-  const longitude = req.query.longitude || 8.390071;
+  const latitude = 49.01379;
+  const longitude = 8.390071;
 
-  // Beispiel-Tags nur einmalig hinzufügen
+  // Beispiel-Tags nur hinzufügen, wenn der Speicher leer ist
   if (store.getNearbyGeoTags(latitude, longitude, 100).length === 0) {
-    GeoTagExamples.populateStore(store);
-}
+      GeoTagExamples.populateStore(store); // Beispiel-Tags laden
+      console.log("Beispiel-Tags wurden geladen:", store.getNearbyGeoTags(latitude, longitude, 100));
+  }
 
-  const allTags = store.getNearbyGeoTags(latitude, longitude, 100); // Alle Tags holen
-  res.render('index', { taglist: allTags, latitude, longitude }); // Render mit allen Tags
+  // Alle Tags aus dem Speicher holen
+  const allTags = store.getNearbyGeoTags(latitude, longitude, 100);
+
+  // Tags an die HTML-Seite übergeben
+  res.render('index', { taglist: allTags, latitude, longitude });
 });
 
 
