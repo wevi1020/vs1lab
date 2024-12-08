@@ -49,13 +49,13 @@ router.get('/', (req, res) => {
   const longitude = 8.390071;
 
   // Beispiel-Tags nur hinzufügen, wenn der Speicher leer ist
-  if (store.getNearbyGeoTags(latitude, longitude, 100).length === 0) {
+  if (store.getNearbyGeoTags(latitude, longitude, 1000).length === 0) {
       GeoTagExamples.populateStore(store); // Beispiel-Tags laden
       console.log("Beispiel-Tags wurden geladen:", store.getNearbyGeoTags(latitude, longitude, 100));
   }
 
   // Alle Tags aus dem Speicher holen
-  const allTags = store.getNearbyGeoTags(latitude, longitude, 100);
+  const allTags = store.getNearbyGeoTags(latitude, longitude, 1000);
 
   // Tags an die HTML-Seite übergeben
   res.render('index', { taglist: allTags, latitude, longitude });
