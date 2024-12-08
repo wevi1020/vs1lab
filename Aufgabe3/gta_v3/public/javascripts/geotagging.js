@@ -52,8 +52,10 @@ function locationCallBack(helper) {
         console.log("resultMap wird entfernt");
         resultMap.remove();
     }
-    
-    mng = new MapManager();
+
+    // Initialisiere die Karte
+    const mng = new MapManager();
+    console.log("Karte wird initialisiert mit:", helper.latitude, helper.longitude);
     mng.initMap(helper.latitude, helper.longitude);
     mng.updateMarkers(helper.latitude, helper.longitude);
     
