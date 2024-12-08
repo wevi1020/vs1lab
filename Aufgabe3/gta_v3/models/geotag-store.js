@@ -28,7 +28,8 @@ class InMemoryGeoTagStore{
     #tags = []; // Privates Array: Nur die Methoden dieser Klasse können darauf zugreifen.
 
     addGeoTag(tag) {
-        this.#tags.push(tag); // Fügt ein neues GeoTag hinzu.
+        this.#tags.push(tag);
+        console.log("Aktuelle Tags im Speicher:", this.#tags);
     }
 
     removeGeoTag(name) {
