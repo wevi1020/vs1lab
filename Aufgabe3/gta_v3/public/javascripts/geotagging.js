@@ -63,7 +63,8 @@ function locationCallBack(helper) {
 
   // Lese das `data-tags`-Attribut
     const mapElement = document.getElementById("map");
-    const dataTags = mapElement.getAttribute("data-tags");
+    const dataTags = JSON.parse(document.getElementById("map").getAttribute("data-tags"));
+    console.log("GeoTags aus data-tags:", dataTags);
     const geoTags = JSON.parse(dataTags || "[]"); // Konvertiere JSON-String zu Array
     console.log("GeoTags aus data-tags:", geoTags);
 
@@ -72,7 +73,7 @@ function locationCallBack(helper) {
     console.log("Karte wird initialisiert mit:", helper.latitude, helper.longitude);
     mng.initMap(helper.latitude, helper.longitude);
     console.log("GeoTags, die an updateMarkers übergeben werden:", geoTags);
-    mng.updateMarkers(helper.latitude, helper.longitude);
+    mng.updateMarkers(helper.latitude, helper.longitude, dataTags);
     
 }
 
