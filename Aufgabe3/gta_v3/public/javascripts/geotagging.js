@@ -49,6 +49,7 @@ function updateLocation() {
 function locationCallBack(helper) {
     console.log(helper.latitude + ", " + helper.longitude);
 
+     // Setze die Koordinaten in die Formularfelder
     document.getElementById("tagging_latitude").value = helper.latitude;
     document.getElementById("tagging_longitude").value = helper.longitude;
     document.getElementById("oolatitude").value = helper.latitude;
@@ -57,17 +58,14 @@ function locationCallBack(helper) {
     // Entferne alte Karten-Elemente, falls vorhanden
     const mapView = document.getElementById("mapView");
     const resultMap = document.getElementById("resultMap");
+    if (mapView) mapView.remove();
+    if (resultMap) resultMap.remove();
 
-
-    // Sicherstellen, dass die Elemente existieren, bevor sie entfernt werden
-    if (mapView) {
-        console.log("mapView wird entfernt");
-        mapView.remove();
-    }
-    if (resultMap) {
-        console.log("resultMap wird entfernt");
-        resultMap.remove();
-    }
+  // Lese das `data-tags`-Attribut
+    const mapElement = document.getElementById("map");
+    const dataTags = mapElement.getAttribute("data-tags");
+    const geoTags = JSON.parse(dataTags || "[]"); // Konvertiere JSON-String zu Array
+    console.log("GeoTags aus data-tags:", geoTags);
 
     // Initialisiere die Karte
     const mng = new MapManager();
