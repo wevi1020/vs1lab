@@ -29,6 +29,7 @@ const GeoTag = require('../models/geotag');
  * TODO: implement the module in the file "../models/geotag-store.js"
  */
 // eslint-disable-next-line no-unused-vars
+
 const GeoTagExamples = require('../models/geotag-examples');
 const GeoTagStore = require('../models/geotag-store');
 
@@ -42,6 +43,7 @@ const GeoTagStore = require('../models/geotag-store');
  */
 
 // TODO: extend the following route example if necessary
+const store = new GeoTagStore(); // Erstelle den Speicher
 router.get('/', (req, res) => {
   const latitude = 49.01379;
   const longitude = 8.390071;
