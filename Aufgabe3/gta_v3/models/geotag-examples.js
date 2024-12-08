@@ -31,8 +31,10 @@ class GeoTagExamples {
         ];
     }
     static populateStore(store) {
-        this.tagList.forEach(tag => store.addGeoTag(new GeoTag(...tag))); // Konvertiert die Liste in GeoTags und fügt sie hinzu.
-    }
-}
+        this.tagList.forEach(tag => {
+            store.addGeoTag(new GeoTag(...tag));
+            console.log("Hinzugefügter Tag:", tag); // Debug-Ausgabe
+        });
+}}
 
 module.exports = GeoTagExamples;
