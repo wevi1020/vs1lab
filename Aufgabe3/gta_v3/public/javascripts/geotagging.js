@@ -63,8 +63,8 @@ function locationCallBack(helper) {
 
   // Lese das `data-tags`-Attribut
     const mapElement = document.getElementById("map");
-    const dataTags = JSON.parse(document.getElementById("map").getAttribute("data-tags"));
-console.log("GeoTags aus data-tags:", dataTags);
+    const dataTagsString = document.getElementById("map").getAttribute("data-tags");
+console.log("Typ von data-tags:", typeof dataTagsString);
     const geoTags = JSON.parse(dataTags || "[]"); // Konvertiere JSON-String zu Array
     console.log("GeoTags aus data-tags:", geoTags);
 
