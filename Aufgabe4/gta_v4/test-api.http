@@ -5,10 +5,10 @@ POST http://localhost:3000/api/geotags
 Content-Type: application/json
 
 {
-  "name": "Beach",
-  "latitude": 47.1234,
-  "longitude": 8.9999,
-  "hashtag": "#sun"
+"name":"Beach",
+"latitude":47.1234,
+"longitude":8.9999,
+"hashtag":"#sun"
 }
 
 # ==============================
