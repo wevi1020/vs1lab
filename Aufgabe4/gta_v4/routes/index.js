@@ -25,6 +25,7 @@ const GeoTag = require('../models/geotag');
  * It provides an in-memory store for geotag objects.
  */
 // eslint-disable-next-line no-unused-vars
+const GeoTagExamples = require('../models/geotag-examples');
 const GeoTagStore = require('../models/geotag-store');
 
 // App routes (A3)
@@ -37,9 +38,78 @@ const GeoTagStore = require('../models/geotag-store');
  *
  * As response, the ejs-template is rendered without geotag objects.
  */
+const store = new GeoTagStore(); // Erstelle den Speicher
 
 router.get('/', (req, res) => {
-  res.render('index', { taglist: [] })
+  const latitude = 49.01379;
+  const longitude = 8.390071;
+
+   // Beispiel-Tags nur hinzufügen, wenn der Speicher leer ist
+   if (store.getNearbyGeoTags(latitude, longitude, 1000).length === 0) {
+    GeoTagExamples.populateStore(store); // Beispiel-Tags laden
+    console.log("Beispiel-Tags wurden geladen:", store.getNearbyGeoTags(latitude, longitude, 1000));
+}
+
+// Alle Tags aus dem Speicher holen
+const allTags = store.getNearbyGeoTags(latitude, longitude, 1000);
+  // Tags an die HTML-Seite übergeben
+  res.render('index', {  taglist: allTags,
+    latitude,
+    longitude,
+    searchLatitude:latitude,
+    searchLongitude:longitude });
+  console.log("An die EJS-Datei übergebene Tags:", allTags);
+});
+
+/** (A3)
+ * Route '/discovery' for HTTP 'POST' requests.
+ * (http://expressjs.com/de/4x/api.html#app.post.method)
+ *
+ * Requests cary the fields of the discovery form in the body.
+ * This includes coordinates and an optional search term.
+ * (http://expressjs.com/de/4x/api.html#req.body)
+ *
+ * As response, the ejs-template is rendered with geotag objects.
+ * All result objects are located in the proximity of the given coordinates.
+ * If a search term is given, the results are further filtered to contain 
+ * the term as a part of their names or hashtags. 
+ * To this end, "GeoTagStore" provides methods to search geotags 
+ * by radius and keyword.
+ */
+
+router.post('/discovery', (req, res) => {
+  console.log("Formulardaten:", req.body);
+
+  // Eingaben aus dem Formular auslesen
+  const searchLatitude = parseFloat(req.body.latitude || 49.01379); // Fallback auf Standardkoordinaten
+  const searchLongitude = parseFloat(req.body.longitude || 8.390071);
+  const keyword = req.body.keyword || ""; // Fallback auf leeren String
+
+  console.log("Empfangen: Search Latitude:", searchLatitude, "Search Longitude:", searchLongitude, "Keyword:", keyword);
+
+  // Tags im Umkreis suchen 
+  const nearbyTags = store.getNearbyGeoTags(searchLatitude, searchLongitude, 1000);
+  console.log("Tags im Umkreis (vor Filterung):", nearbyTags);
+
+  // Falls ein Keyword angegeben ist, die Tags filtern
+  const filteredTags = keyword
+    ? nearbyTags.filter(tag => tag.name.includes(keyword) || tag.hashtag.includes(keyword))
+    : nearbyTags;
+
+  console.log("Gefundene Tags (nach Filterung):", filteredTags);
+
+   // Aktuelle Standortkoordinaten an die Seite übergeben
+  const currentLatitude = 49.01379; // Konstante Werte für den aktuellen Standort
+  const currentLongitude = 8.390071;
+
+  // Tags und Koordinaten an die HTML-Seite übergeben
+  res.render('index', {
+      taglist: filteredTags,
+      latitude: currentLatitude,
+      longitude: currentLongitude,
+      searchLatitude,
+      searchLongitude 
+    });
 });
 
 // API routes (A4)
