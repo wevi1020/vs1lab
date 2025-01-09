@@ -26,15 +26,79 @@
 class InMemoryGeoTagStore{
 
     #tags = []; // Privates Array: Nur die Methoden dieser Klasse können darauf zugreifen.
+    #nextId = 1;
+
+    /**
+     * Fügt ein GeoTag hinzu und vergibt eine ID, falls noch nicht vorhanden.
+     * Gibt das neu angelegte Objekt zurück.
+     */
 
     addGeoTag(tag) {
+        if (!tag.id) {
+            tag.id = this.#nextId++;
+        }
         this.#tags.push(tag); // Fügt das neue Tag zur Liste hinzu
-        console.log("Neues Tag hinzugefügt:", this.#tags); // Zeigt die aktuelle Liste
+        console.log("Neues Tag hinzugefügt:", tag); // Zeigt die aktuelle Liste
+        return tag;
     }
+
+    /**
+     * Entfernt alle Tags mit einem bestimmten Namen (alter Mechanismus).
+     * -> Für die REST-API brauchen wir zusätzlich eine ID-basierte Methode.
+    (alter Mechanismus)*/
 
     removeGeoTag(name) {
         this.#tags = this.#tags.filter(tag => tag.name !== name); // Löscht GeoTags anhand ihres Namens.
     }
+
+    /**
+     * Löscht Tag anhand der ID.
+     * Gibt das gelöschte Tag zurück oder undefined, wenn keines gefunden wurde.
+     */
+
+    removeGeoTagById(id) {
+        const index = this.#tags.findIndex(tag => tag.id === id);
+        if (index !== -1) {
+            const deleted = this.#tags[index];
+            this.#tags.splice(index, 1);
+            return deleted;
+        }
+        return undefined;
+    }
+
+     /**
+     * Sucht anhand der ID das Tag oder gibt undefined zurück.
+     */
+
+     getGeoTagById(id) {
+        return this.#tags.find(tag => tag.id === id);
+    }
+
+
+    /**
+     * Aktualisiert ein Tag anhand der ID.
+     * newData enthält z.B. { name, latitude, longitude, hashtag }
+     * Gibt das aktualisierte Tag zurück oder undefined, wenn nichts gefunden.
+     */
+    updateGeoTagById(id, newData) {
+        const index = this.#tags.findIndex(tag => tag.id === id);
+        if (index !== -1) {
+            // Alte Daten
+            const oldTag = this.#tags[index];
+            // Überschreibe Felder, die sich geändert haben
+            this.#tags[index] = {
+                ...oldTag,
+                ...newData,
+                id: oldTag.id // ID nicht überschreiben
+            };
+            return this.#tags[index];
+        }
+        return undefined;
+    }
+
+  /**
+     * Liefert alle Tags im gegebenen Radius um (latitude, longitude).
+     (alter Mechanismus)*/ 
 
     getNearbyGeoTags(latitude, longitude, radius = 1) {
         return this.#tags.filter(tag => {
@@ -44,6 +108,11 @@ class InMemoryGeoTagStore{
             return distance <= radius; // Nur GeoTags, die im Radius liegen.
         });
     }
+
+     /**
+     * Liefert alle Tags im gegebenen Radius,
+     * die zusätzlich einem Suchbegriff (keyword) entsprechen.
+    (alter Mechanismus)*/
 
     searchNearbyGeoTags(latitude, longitude, radius = 1, keyword = "") {
         const nearbyTags = this.getNearbyGeoTags(latitude, longitude, radius);
