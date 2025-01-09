@@ -1,6 +1,4 @@
-# ==============================
-# 1) POST /api/geotags
-# ==============================
+
 POST http://localhost:3000/api/geotags
 Content-Type: application/json
 
@@ -11,20 +9,12 @@ Content-Type: application/json
 "hashtag":"#sun"
 }
 
-# ==============================
-# 2) GET /api/geotags
-# ==============================
 GET http://localhost:3000/api/geotags
 
-# ==============================
-# 3) GET /api/geotags/:id
-# ==============================
-# Ersetze :id durch die Nummer, die dir bei POST zurückgegeben wurde
+
 GET http://localhost:3000/api/geotags/1
 
-# ==============================
-# 4) PUT /api/geotags/:id
-# ==============================
+
 PUT http://localhost:3000/api/geotags/1
 Content-Type: application/json
 
@@ -35,7 +25,4 @@ Content-Type: application/json
   "hashtag": "#betterSun"
 }
 
-# ==============================
-# 5) DELETE /api/geotags/:id
-# ==============================
 DELETE http://localhost:3000/api/geotags/1
