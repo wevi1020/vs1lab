@@ -162,7 +162,7 @@ async function handleTagFormSubmit(event) {
     const list = document.getElementById("discoveryResults");
     if (!list) return;
   
-    list.innerHTML = ""; // clean
+    list.innerHTML = ""; // alle löschen
   
     if (!tags || tags.length === 0) {
       list.innerHTML = "<li>Keine Tags gefunden</li>";
