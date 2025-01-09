@@ -11,19 +11,16 @@ Content-Type: application/json
   "hashtag": "#sun"
 }
 
-
 # ==============================
 # 2) GET /api/geotags
 # ==============================
 GET http://localhost:3000/api/geotags
-
 
 # ==============================
 # 3) GET /api/geotags/:id
 # ==============================
 # Ersetze :id durch die Nummer, die dir bei POST zurückgegeben wurde
 GET http://localhost:3000/api/geotags/1
-
 
 # ==============================
 # 4) PUT /api/geotags/:id
@@ -37,7 +34,6 @@ Content-Type: application/json
   "longitude": 8.9999,
   "hashtag": "#betterSun"
 }
-
 
 # ==============================
 # 5) DELETE /api/geotags/:id
