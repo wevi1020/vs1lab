@@ -131,7 +131,7 @@ router.get('/api/geotags', (req, res) => {
   const searchTerm = req.query.searchterm || "";
   const latitude = parseFloat(req.query.latitude) || 0;
   const longitude = parseFloat(req.query.longitude) || 0;
-  const radius = parseFloat(req.query.radius) || 1000;v
+  const radius = parseFloat(req.query.radius) || 1000;
 
  // Filter via searchNearbyGeoTags
  const tags = store.searchNearbyGeoTags(latitude, longitude, radius, searchTerm);
