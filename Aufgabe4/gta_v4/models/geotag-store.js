@@ -34,9 +34,8 @@ class InMemoryGeoTagStore{
      */
 
     addGeoTag(tag) {
-        if (!tag.id) {
-            tag.id = this.#nextId++;
-        }
+        tag["id"] = this.#nextId++;
+        
         this.#tags.push(tag); // Fügt das neue Tag zur Liste hinzu
         console.log("Neues Tag hinzugefügt:", tag); // Zeigt die aktuelle Liste
         return tag;
