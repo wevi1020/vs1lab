@@ -119,6 +119,12 @@
                     </ul>
                 </div>
 
+                <div class="pagination__container">
+                    <a href="#" id="previousGeoPage">&lt;</a>
+                    <label id="pageDisplay"></label>
+                    <a href="#" id="nextGeoPage">&gt;</a>
+                </div>
+
                 <div id="map" class="discovery__map" <% console.log("Taglist im Template:", taglist); %><% console.log("Taglist im Template:", taglist); %>data-tags='<%= JSON.stringify(taglist || []) %>'>
                     <img src="./images/mapview.jpg" alt="a map with locations" id="mapView" /><br>
                     <span id="resultMap">Result map</span>
