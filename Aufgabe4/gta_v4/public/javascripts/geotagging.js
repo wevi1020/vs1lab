@@ -27,6 +27,11 @@ console.log("The geoTagging script is going to start...");
 import LocationHelper from './location-helper.js';
 import MapManager from './map-manager.js';
 
+const maxGeoTagsNumber = 4;
+var pageCounter = 0;
+var pageNumber = 0;
+var allTags = [];
+
 function updateLocation() {
      // Lese die aktuellen Werte der Formularfelder für die Koordinaten
      const latitudeField = document.getElementById("tagging_latitude").value;
@@ -34,16 +39,16 @@ function updateLocation() {
  
      // Überprüfe, ob die Felder leer sind
      if (!latitudeField || !longitudeField) {
-         console.log("Koordinaten fehlen, GeoLocation API wird verwendet...");
-         // Rufe die GeoLocation API nur auf, wenn die Koordinaten fehlen
-    LocationHelper.findLocation(locationCallBack);
+      console.log("Koordinaten fehlen, GeoLocation API wird verwendet...");
+      // Rufe die GeoLocation API nur auf, wenn die Koordinaten fehlen
+      LocationHelper.findLocation(locationCallBack);
 
-} else {
-    console.log("Koordinaten bereits vorhanden, keine GeoLocation API nötig.");
-    // Optional: Rufe die Callback-Funktion direkt mit den vorhandenen Werten auf
-    const helper = new LocationHelper(latitudeField, longitudeField);
-    locationCallBack(helper);
-}
+    } else {
+        console.log("Koordinaten bereits vorhanden, keine GeoLocation API nötig.");
+        // Optional: Rufe die Callback-Funktion direkt mit den vorhandenen Werten auf
+        const helper = new LocationHelper(latitudeField, longitudeField);
+        locationCallBack(helper);
+    }
 }
 
 function locationCallBack(helper) {
@@ -66,18 +71,20 @@ function locationCallBack(helper) {
     const dataTagsString = mapElement.getAttribute("data-tags");
     let dataTags = [];
     try {
-        dataTags = JSON.parse(dataTagsString || "[]"); // Konvertiere JSON-String zu Array
+        allTags = JSON.parse(dataTagsString || "[]"); // Konvertiere JSON-String zu Array
+        calculatePageNumber();
+        dataTags = updateGeoResults();
     } catch (e) {
         console.error("Fehler beim Parsen von data-tags:", e);
     }
-    console.log("GeoTags aus data-tags:", dataTags);
+    console.log("GeoTags aus data-tags:", allTags);
 
     // Initialisiere die Karte
     const mng = new MapManager();
     console.log("Karte wird initialisiert mit:", helper.latitude, helper.longitude);
     mng.initMap(helper.latitude, helper.longitude);
-    console.log("GeoTags, die an updateMarkers übergeben werden:", dataTags);
-    mng.updateMarkers(helper.latitude, helper.longitude, dataTags);
+    console.log("GeoTags, die an updateMarkers übergeben werden:", allTags);
+    mng.updateMarkers(helper.latitude, helper.longitude, allTags);
     
 }
 
@@ -138,6 +145,7 @@ async function handleTagFormSubmit(event) {
     const lng = lngField ? lngField.value : "0";
   
     const radius = 1000; 
+    pageCounter = 0;
   
     // GET-URL zusammenbauen
     const url = `/api/geotags?searchterm=${encodeURIComponent(keyword)}&latitude=${lat}&longitude=${lng}&radius=${radius}`;
@@ -157,6 +165,35 @@ async function handleTagFormSubmit(event) {
       console.error("Fehler bei der Discovery-Suche:", error);
     }
   }
+
+  //
+  function calculatePageNumber() {
+    pageNumber = Math.floor(allTags.length/maxGeoTagsNumber);
+      if((pageNumber*maxGeoTagsNumber) < allTags.length)
+        pageNumber++;
+  }
+
+  //
+  function updateGeoResults() {
+    let tags = [];
+    var start = pageCounter*maxGeoTagsNumber;
+    var end = start+maxGeoTagsNumber;
+
+    if (end > allTags.length)
+      end = allTags.length;
+
+    console.log("start=", start, " end=", end);
+    //
+    for(let i = start; i < end; i++)
+      tags.push(allTags.at(i));
+
+    // Update der Ergebnisliste
+    updateDiscoveryResults(tags);
+
+    var label = document.getElementById("pageDisplay");//Zugriff auf HTML-Dok.
+    label.textContent = `${(pageCounter + 1)}/${pageNumber} (${allTags.length})`; //
+    return tags;
+  }
   
   function updateDiscoveryResults(tags) {
     const list = document.getElementById("discoveryResults");
@@ -174,6 +211,20 @@ async function handleTagFormSubmit(event) {
       li.textContent = `${tag.name} (${tag.latitude}, ${tag.longitude}) ${tag.hashtag}`;
       list.appendChild(li);
     });
+  }
+
+  function prevGeoPage(){
+    if(pageCounter == 0) return; //Verhindert die Möglichkeit am Anfang ins minus zu gehen
+    pageCounter--;
+    updateGeoResults();
+  }
+
+  
+  function nextGeoPage(){
+    if(pageCounter == (pageNumber-1)) return; //Verhindert die Möglichkeit am Ende weiter zu klicken
+    console.log("pageCounter=", pageCounter, " pageNumber=", pageNumber);
+    pageCounter++;
+    updateGeoResults();
   }
   
   /**
