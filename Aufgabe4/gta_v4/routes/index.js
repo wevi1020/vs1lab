@@ -39,6 +39,7 @@ const GeoTagStore = require('../models/geotag-store');
  * As response, the ejs-template is rendered without geotag objects.
  */
 const store = new GeoTagStore(); // Erstelle den Speicher
+GeoTagExamples.populateStore(store);
 
 router.get('/', (req, res) => {
   const latitude = 49.01379;
@@ -129,10 +130,9 @@ router.post('/discovery', (req, res) => {
 router.get('/api/geotags', (req, res) => {
   // Mögliche Query-Parameter
   const searchTerm = req.query.searchterm || "";
-  const latitude = parseFloat(req.query.latitude) || 0;
-  const longitude = parseFloat(req.query.longitude) || 0;
+  const latitude = parseFloat(req.query.latitude) || 49.01379;
+  const longitude = parseFloat(req.query.longitude) || 8.390071;
   const radius = parseFloat(req.query.radius) || 1000;
-
  // Filter via searchNearbyGeoTags
  const tags = store.searchNearbyGeoTags(latitude, longitude, radius, searchTerm);
 
@@ -163,8 +163,7 @@ router.post('/api/geotags', (req, res) => {
   }
 
   // Neues Tag anlegen
-  const newTag = store.addGeoTag({ name, latitude, longitude, hashtag });
-
+  const newTag = store.addGeoTag(new GeoTag(name, latitude, longitude, hashtag));
   // Antwort mit Status 201 (Created)
   res
     .status(201)
