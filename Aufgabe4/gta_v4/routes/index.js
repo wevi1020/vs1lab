@@ -47,19 +47,19 @@ router.get('/', (req, res) => {
 
    // Beispiel-Tags nur hinzufügen, wenn der Speicher leer ist
    if (store.getNearbyGeoTags(latitude, longitude, 1000).length === 0) {
-    GeoTagExamples.populateStore(store); // Beispiel-Tags laden
-    console.log("Beispiel-Tags wurden geladen:", store.getNearbyGeoTags(latitude, longitude, 1000));
-}
+      GeoTagExamples.populateStore(store); // Beispiel-Tags laden
+      console.log("Beispiel-Tags wurden geladen:", store.getNearbyGeoTags(latitude, longitude, 1000));
+   }
 
-// Alle Tags aus dem Speicher holen
-const allTags = store.getNearbyGeoTags(latitude, longitude, 1000);
-  // Tags an die HTML-Seite übergeben
-  res.render('index', {  taglist: allTags,
-    latitude,
-    longitude,
-    searchLatitude:latitude,
-    searchLongitude:longitude });
-  console.log("An die EJS-Datei übergebene Tags:", allTags);
+   // Alle Tags aus dem Speicher holen
+   const allTags = store.getNearbyGeoTags(latitude, longitude, 1000);
+    // Tags an die HTML-Seite übergeben
+    res.render('index', {  taglist: allTags,
+      latitude,
+      longitude,
+      searchLatitude:latitude,
+      searchLongitude:longitude });
+    console.log("An die EJS-Datei übergebene Tags:", allTags);
 });
 
 /** (A3)
@@ -77,8 +77,8 @@ const allTags = store.getNearbyGeoTags(latitude, longitude, 1000);
  * To this end, "GeoTagStore" provides methods to search geotags 
  * by radius and keyword.
  */
-
-router.post('/discovery', (req, res) => {
+//POST = suche "search-request"
+router.post('/discovery', (req, res) => {//req = stehen Daten vom Client; res = Server schick Daten zum Client
   console.log("Formulardaten:", req.body);
 
   // Eingaben aus dem Formular auslesen
@@ -92,9 +92,9 @@ router.post('/discovery', (req, res) => {
   const nearbyTags = store.getNearbyGeoTags(searchLatitude, searchLongitude, 1000);
   console.log("Tags im Umkreis (vor Filterung):", nearbyTags);
 
-  // Falls ein Keyword angegeben ist, die Tags filtern
+  // Falls ein Keyword angegeben ist, die Tags filtern; Syntax fuer if-else
   const filteredTags = keyword
-    ? nearbyTags.filter(tag => tag.name.includes(keyword) || tag.hashtag.includes(keyword))
+    ? nearbyTags.filter(tag => tag.name.includes(keyword) || tag.hashtag.includes(keyword)) // filter = ersetzt for-Schleife
     : nearbyTags;
 
   console.log("Gefundene Tags (nach Filterung):", filteredTags);
@@ -128,13 +128,15 @@ router.post('/discovery', (req, res) => {
  */
 
 router.get('/api/geotags', (req, res) => {
+  console.log("Suchdaten:", req.query);
   // Mögliche Query-Parameter
   const searchTerm = req.query.searchterm || "";
-  const latitude = parseFloat(req.query.latitude) || 49.01379;
+  const latitude = parseFloat(req.query.latitude) || 49.01379; //String in Float parsen
   const longitude = parseFloat(req.query.longitude) || 8.390071;
   const radius = parseFloat(req.query.radius) || 1000;
  // Filter via searchNearbyGeoTags
  const tags = store.searchNearbyGeoTags(latitude, longitude, radius, searchTerm);
+ console.log("Gefundene Tags (nach Filterung):", tags);
 
  // Rückgabe als JSON
  res.json(tags);
@@ -152,7 +154,6 @@ router.get('/api/geotags', (req, res) => {
  * The URL of the new resource is returned in the header as a response.
  * The new resource is rendered as JSON in the response.
  */
-
 router.post('/api/geotags', (req, res) => {
   // Daten aus dem JSON-Body
   const { name, latitude, longitude, hashtag } = req.body;

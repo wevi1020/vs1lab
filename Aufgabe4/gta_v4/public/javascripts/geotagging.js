@@ -27,12 +27,13 @@ console.log("The geoTagging script is going to start...");
 import LocationHelper from './location-helper.js';
 import MapManager from './map-manager.js';
 
+const mng = new MapManager();
 const maxGeoTagsNumber = 4;
 var pageCounter = 0;
 var pageNumber = 0;
 var allTags = [];
 
-function updateLocation() {
+function updateLocation(dataTags) {
      // Lese die aktuellen Werte der Formularfelder für die Koordinaten
      const latitudeField = document.getElementById("tagging_latitude").value;
      const longitudeField = document.getElementById("tagging_longitude").value;
@@ -47,7 +48,8 @@ function updateLocation() {
         console.log("Koordinaten bereits vorhanden, keine GeoLocation API nötig.");
         // Optional: Rufe die Callback-Funktion direkt mit den vorhandenen Werten auf
         const helper = new LocationHelper(latitudeField, longitudeField);
-        locationCallBack(helper);
+        
+        dataTags ? mng.updateMarkers(helper.latitude, helper.longitude, dataTags) : locationCallBack(helper);
     }
 }
 
@@ -80,12 +82,10 @@ function locationCallBack(helper) {
     console.log("GeoTags aus data-tags:", allTags);
 
     // Initialisiere die Karte
-    const mng = new MapManager();
     console.log("Karte wird initialisiert mit:", helper.latitude, helper.longitude);
     mng.initMap(helper.latitude, helper.longitude);
-    console.log("GeoTags, die an updateMarkers übergeben werden:", allTags);
-    mng.updateMarkers(helper.latitude, helper.longitude, allTags);
-    
+    console.log("GeoTags, die an updateMarkers übergeben werden:", dataTags);
+    mng.updateMarkers(helper.latitude, helper.longitude, dataTags);
 }
 
 // Tagging-Form (POST /api/geotags)
@@ -111,7 +111,7 @@ async function handleTagFormSubmit(event) {
       const response = await fetch("/api/geotags", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newTag)
+        body: JSON.stringify(newTag)//Objekt "newTag" wird in ein String umgewandelt und durch POST verschickt
       });
   
       if (!response.ok) {
@@ -151,15 +151,18 @@ async function handleTagFormSubmit(event) {
     const url = `/api/geotags?searchterm=${encodeURIComponent(keyword)}&latitude=${lat}&longitude=${lng}&radius=${radius}`;
   
     try {
-      const response = await fetch(url);
+      const response = await fetch(url); //der Link wird verschickt und auf res gewartet
       if (!response.ok) {
         throw new Error(`Server error: ${response.status}`);
       }
-      const tags = await response.json();
-      console.log("Gefundene Tags:", tags);
+
+      allTags = await response.json();
+      console.log("Gefundene Tags:", allTags);
   
-      // Update der Ergebnisliste
-      updateDiscoveryResults(tags);
+      calculatePageNumber();
+      let dataTags = updateGeoResults();
+      // Geolocation / Karte updaten
+      updateLocation(dataTags);
       
     } catch (error) {
       console.error("Fehler bei der Discovery-Suche:", error);
@@ -202,7 +205,7 @@ async function handleTagFormSubmit(event) {
     list.innerHTML = ""; // alle löschen
   
     if (!tags || tags.length === 0) {
-      list.innerHTML = "<li>Keine Tags gefunden</li>";
+      //list.innerHTML = "<li>Keine Tags gefunden</li>";
       return;
     }
   
@@ -216,7 +219,9 @@ async function handleTagFormSubmit(event) {
   function prevGeoPage(){
     if(pageCounter == 0) return; //Verhindert die Möglichkeit am Anfang ins minus zu gehen
     pageCounter--;
-    updateGeoResults();
+    let dataTags = updateGeoResults();
+    // Geolocation / Karte updaten
+    updateLocation(dataTags);
   }
 
   
@@ -224,7 +229,9 @@ async function handleTagFormSubmit(event) {
     if(pageCounter == (pageNumber-1)) return; //Verhindert die Möglichkeit am Ende weiter zu klicken
     console.log("pageCounter=", pageCounter, " pageNumber=", pageNumber);
     pageCounter++;
-    updateGeoResults();
+    let dataTags = updateGeoResults();
+    // Geolocation / Karte updaten
+    updateLocation(dataTags);
   }
   
   /**
@@ -233,7 +240,7 @@ async function handleTagFormSubmit(event) {
      Event-Listener
    * aufruf updateLocation()
    */
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("DOMContentLoaded", () => {// "() =>" =: Syntax direkte Implementierung des listeners
     // Tagging-Form
     const tagForm = document.getElementById("tag-form");
     if (tagForm) {
@@ -245,7 +252,24 @@ async function handleTagFormSubmit(event) {
     if (discoveryForm) {
       discoveryForm.addEventListener("submit", handleDiscoverySubmit);
     }
-  
-    // Geolocation / Karte updaten
-    updateLocation();
+
+     //
+     const prevLink = document.getElementById("previousGeoPage");
+     if (prevLink) {
+       prevLink.addEventListener("click", function(event) {
+         event.preventDefault();//Ausfuehrung des Standardverhaltens dieses Events wird verhindert (da kein Link angegeben wurde springt es nicht mehr rum)
+         prevGeoPage();
+       });
+     }
+ 
+     //
+     const nextLink = document.getElementById("nextGeoPage");
+     if (nextLink) {
+       nextLink.addEventListener("click", function(event) {
+         event.preventDefault();
+         nextGeoPage();
+       });
+     }
+     // Geolocation / Karte updaten
+     updateLocation();
   });
