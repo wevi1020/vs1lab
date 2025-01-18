@@ -154,9 +154,10 @@ router.get('/api/geotags', (req, res) => {
  * The URL of the new resource is returned in the header as a response.
  * The new resource is rendered as JSON in the response.
  */
+  //POST = Daten erstellen
 router.post('/api/geotags', (req, res) => {
   // Daten aus dem JSON-Body
-  const { name, latitude, longitude, hashtag } = req.body;
+  const { name, latitude, longitude, hashtag } = req.body;//direkter Zugriff auf die Variable, ohne req.body jedes Mal neu zu referenzieren
 
   // Einfacher Check, ob alle Felder da sind (optional)
   if (!name || latitude === undefined || longitude === undefined) {
@@ -167,9 +168,9 @@ router.post('/api/geotags', (req, res) => {
   const newTag = store.addGeoTag(new GeoTag(name, latitude, longitude, hashtag));
   // Antwort mit Status 201 (Created)
   res
-    .status(201)
-    .location(`/api/geotags/${newTag.id}`)
-    .json(newTag);
+    .status(201) //Setzt den HTTP-Statuscode der Antwort auf 201 "created = wurde erfolgreich erstellt"
+    .location(`/api/geotags/${newTag.id}`)// Gibt die URL der neu erstellten Ressource an. Der Client kann diesen Pfad verwenden, um auf die neu erstellte Ressource zuzugreifen
+    .json(newTag);//Sendet das newTag-Objekt als JSON im Antwort-Body
 });
 
 
@@ -184,7 +185,7 @@ router.post('/api/geotags', (req, res) => {
  */
 
 router.get('/api/geotags/:id', (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = parseInt(req.params.id); //String in int parsen
   const foundTag = store.getGeoTagById(id);
 
   if (!foundTag) {
@@ -209,12 +210,12 @@ router.get('/api/geotags/:id', (req, res) => {
  * Changes the tag with the corresponding ID to the sent value.
  * The updated resource is rendered as JSON in the response. 
  */
-
+//PUT = Daten aktualisieren/aendern
 router.put('/api/geotags/:id', (req, res) => {
   const id = parseInt(req.params.id);
 
   // Neue Daten aus dem Body
-  const { name, latitude, longitude, hashtag } = req.body;
+  const { name, latitude, longitude, hashtag } = req.body;//direkter Zugriff auf die Variable, ohne req.body jedes Mal neu zu referenzieren
 
   const updatedTag = store.updateGeoTagById(id, {
     name,

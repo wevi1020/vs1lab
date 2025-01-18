@@ -125,7 +125,7 @@ async function handleTagFormSubmit(event) {
       // Nach dem Anlegen → Discovery-Liste aktualisieren
       await handleDiscoverySubmit();
       
-    } catch (error) {
+    } catch (error) {//faengt Fehler ab, die im try-Block auftreten
       console.error("Fehler beim Anlegen eines neuen GeoTags:", error);
     }
   }
@@ -134,13 +134,13 @@ async function handleTagFormSubmit(event) {
   // Sucht alle Tags basierend auf dem Keyword + Koordinaten
   async function handleDiscoverySubmit(event) {
     // Falls der event-Parameter übergeben wurde (Submit), abbrechen
-    if (event) event.preventDefault();
+    if (event) event.preventDefault();//preventDefault() wird nur aufgerufen wird, wenn tatsächlich ein Ereignisobjekt vorhanden ist
   
     const keywordField = document.querySelector("#discoveryFilterForm input[name='keyword']");
     const latField = document.getElementById("oolatitude");
     const lngField = document.getElementById("oolongitude");
   
-    const keyword = keywordField ? keywordField.value : "";
+    const keyword = keywordField ? keywordField.value : ""; //if-else Abfrage
     const lat = latField ? latField.value : "0";
     const lng = lngField ? lngField.value : "0";
   
@@ -240,11 +240,13 @@ async function handleTagFormSubmit(event) {
      Event-Listener
    * aufruf updateLocation()
    */
+  //Listener wartet, bis das DOM vollständig geladen ist
   document.addEventListener("DOMContentLoaded", () => {// "() =>" =: Syntax direkte Implementierung des listeners
     // Tagging-Form
-    const tagForm = document.getElementById("tag-form");
+    //Submit-Event-Listener wird zum Tag-Formular hinzugefügt
+    const tagForm = document.getElementById("tag-form");//falls er existiert
     if (tagForm) {
-      tagForm.addEventListener("submit", handleTagFormSubmit);
+      tagForm.addEventListener("submit", handleTagFormSubmit);//handleTagFormSubmit wird aufgerufen
     }
   
     // Discovery-Form
