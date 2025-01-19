@@ -41,25 +41,27 @@ const GeoTagStore = require('../models/geotag-store');
 const store = new GeoTagStore(); // Erstelle den Speicher
 GeoTagExamples.populateStore(store);
 
+// "/" = Beim Laden der Seite
 router.get('/', (req, res) => {
   const latitude = 49.01379;
   const longitude = 8.390071;
 
    // Beispiel-Tags nur hinzufügen, wenn der Speicher leer ist
    if (store.getNearbyGeoTags(latitude, longitude, 1000).length === 0) {
-    GeoTagExamples.populateStore(store); // Beispiel-Tags laden
-    console.log("Beispiel-Tags wurden geladen:", store.getNearbyGeoTags(latitude, longitude, 1000));
-}
+      GeoTagExamples.populateStore(store); // Beispiel-Tags laden
+      console.log("Beispiel-Tags wurden geladen:", store.getNearbyGeoTags(latitude, longitude, 1000));
+   }
 
-// Alle Tags aus dem Speicher holen
-const allTags = store.getNearbyGeoTags(latitude, longitude, 1000);
-  // Tags an die HTML-Seite übergeben
-  res.render('index', {  taglist: allTags,
-    latitude,
-    longitude,
-    searchLatitude:latitude,
-    searchLongitude:longitude });
-  console.log("An die EJS-Datei übergebene Tags:", allTags);
+   // Alle Tags aus dem Speicher holen
+   const allTags = store.getNearbyGeoTags(latitude, longitude, 1000);
+   const subTags = getSubTags(allTags, 0, 4, res);//counter = 0; maxNumber = 4
+    // Tags an die HTML-Seite übergeben
+    res.render('index', {  taglist: subTags,
+      latitude,
+      longitude,
+      searchLatitude:latitude,
+      searchLongitude:longitude });
+    console.log("An die EJS-Datei übergebene Tags:", subTags);
 });
 
 /** (A3)
@@ -77,8 +79,8 @@ const allTags = store.getNearbyGeoTags(latitude, longitude, 1000);
  * To this end, "GeoTagStore" provides methods to search geotags 
  * by radius and keyword.
  */
-
-router.post('/discovery', (req, res) => {
+//POST = suche "search-request"
+router.post('/discovery', (req, res) => {//req = stehen Daten vom Client; res = Server schick Daten zum Client
   console.log("Formulardaten:", req.body);
 
   // Eingaben aus dem Formular auslesen
@@ -92,9 +94,9 @@ router.post('/discovery', (req, res) => {
   const nearbyTags = store.getNearbyGeoTags(searchLatitude, searchLongitude, 1000);
   console.log("Tags im Umkreis (vor Filterung):", nearbyTags);
 
-  // Falls ein Keyword angegeben ist, die Tags filtern
+  // Falls ein Keyword angegeben ist, die Tags filtern; Syntax fuer if-else
   const filteredTags = keyword
-    ? nearbyTags.filter(tag => tag.name.includes(keyword) || tag.hashtag.includes(keyword))
+    ? nearbyTags.filter(tag => tag.name.includes(keyword) || tag.hashtag.includes(keyword)) // filter = ersetzt for-Schleife
     : nearbyTags;
 
   console.log("Gefundene Tags (nach Filterung):", filteredTags);
@@ -126,19 +128,50 @@ router.post('/discovery', (req, res) => {
  * If 'searchterm' is present, it will be filtered by search term.
  * If 'latitude' and 'longitude' are available, it will be further filtered based on radius.
  */
-
+//GeoTag-Suche
 router.get('/api/geotags', (req, res) => {
+  console.log("Suchdaten:", req.query);
   // Mögliche Query-Parameter
   const searchTerm = req.query.searchterm || "";
-  const latitude = parseFloat(req.query.latitude) || 49.01379;
+  const latitude = parseFloat(req.query.latitude) || 49.01379; //String in Float parsen
   const longitude = parseFloat(req.query.longitude) || 8.390071;
   const radius = parseFloat(req.query.radius) || 1000;
- // Filter via searchNearbyGeoTags
- const tags = store.searchNearbyGeoTags(latitude, longitude, radius, searchTerm);
 
- // Rückgabe als JSON
- res.json(tags);
+  const counter = parseInt(req.query.counter) || 0;
+  const maxNumber = parseInt(req.query.maxNumber) || 0;
+  // Filter via searchNearbyGeoTags
+  const tags = store.searchNearbyGeoTags(latitude, longitude, radius, searchTerm);
+  console.log("Gefundene Tags (nach Filterung):", tags);
+
+  const subTags = getSubTags(tags, counter, maxNumber, res);
+  res.json(subTags);// Rückgabe als JSON
 });
+
+function getSubTags(tags, counter, maxNumber, res){
+  res.setHeader("elementNumber", tags.length);
+  if(maxNumber > 0){ //sorgt dafuer, dass nur die maxNumber zurueckgegeben wird
+    let subTags = [];
+    var start = counter*maxNumber;
+    var end = start+maxNumber;
+
+    if (end > tags.length)
+      end = tags.length;
+
+    console.log("start=", start, " end=", end);
+    //
+    for(let i = start; i < end; i++)
+      subTags.push(tags.at(i));
+
+    let pageNumber = Math.floor(tags.length/maxNumber);
+    if((pageNumber*maxNumber) < tags.length)
+      pageNumber++;
+
+    res.setHeader("pageNumber", pageNumber);
+    return subTags;
+  }
+  res.setHeader("pageNumber", 0);
+  return tags;
+}
 
 
 /**
@@ -152,10 +185,10 @@ router.get('/api/geotags', (req, res) => {
  * The URL of the new resource is returned in the header as a response.
  * The new resource is rendered as JSON in the response.
  */
-
+  //POST = Daten erstellen | Hinzufuegen eines GeoTags
 router.post('/api/geotags', (req, res) => {
   // Daten aus dem JSON-Body
-  const { name, latitude, longitude, hashtag } = req.body;
+  const { name, latitude, longitude, hashtag } = req.body;//direkter Zugriff auf die Variable, ohne req.body jedes Mal neu zu referenzieren
 
   // Einfacher Check, ob alle Felder da sind (optional)
   if (!name || latitude === undefined || longitude === undefined) {
@@ -166,9 +199,9 @@ router.post('/api/geotags', (req, res) => {
   const newTag = store.addGeoTag(new GeoTag(name, latitude, longitude, hashtag));
   // Antwort mit Status 201 (Created)
   res
-    .status(201)
-    .location(`/api/geotags/${newTag.id}`)
-    .json(newTag);
+    .status(201) //Setzt den HTTP-Statuscode der Antwort auf 201 "created = wurde erfolgreich erstellt"
+    .location(`/api/geotags/${newTag.id}`)// Gibt die URL der neu erstellten Ressource an. Der Client kann diesen Pfad verwenden, um auf die neu erstellte Ressource zuzugreifen
+    .json(newTag);//Sendet das newTag-Objekt als JSON im Antwort-Body
 });
 
 
@@ -181,9 +214,8 @@ router.post('/api/geotags', (req, res) => {
  *
  * The requested tag is rendered as JSON in the response.
  */
-
 router.get('/api/geotags/:id', (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = parseInt(req.params.id); //String in int parsen
   const foundTag = store.getGeoTagById(id);
 
   if (!foundTag) {
@@ -192,8 +224,6 @@ router.get('/api/geotags/:id', (req, res) => {
 
   res.json(foundTag);
 });
-
-
 
 /**
  * Route '/api/geotags/:id' for HTTP 'PUT' requests.
@@ -208,12 +238,12 @@ router.get('/api/geotags/:id', (req, res) => {
  * Changes the tag with the corresponding ID to the sent value.
  * The updated resource is rendered as JSON in the response. 
  */
-
+//PUT = Daten aktualisieren/aendern
 router.put('/api/geotags/:id', (req, res) => {
   const id = parseInt(req.params.id);
 
   // Neue Daten aus dem Body
-  const { name, latitude, longitude, hashtag } = req.body;
+  const { name, latitude, longitude, hashtag } = req.body;//direkter Zugriff auf die Variable, ohne req.body jedes Mal neu zu referenzieren
 
   const updatedTag = store.updateGeoTagById(id, {
     name,
@@ -229,8 +259,6 @@ router.put('/api/geotags/:id', (req, res) => {
   res.json(updatedTag);
 });
 
-
-
 /**
  * Route '/api/geotags/:id' for HTTP 'DELETE' requests.
  * (http://expressjs.com/de/4x/api.html#app.delete.method)
@@ -241,7 +269,6 @@ router.put('/api/geotags/:id', (req, res) => {
  * Deletes the tag with the corresponding ID.
  * The deleted resource is rendered as JSON in the response.
  */
-
 router.delete('/api/geotags/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const deleted = store.removeGeoTagById(id);

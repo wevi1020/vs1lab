@@ -8,10 +8,6 @@
 
 /* Global styling */
 
-#map { 
-  height: 500px;
-}
-
 html {
   box-sizing: border-box;
 }
@@ -76,14 +72,7 @@ button {
   margin-right: 30px;
 }
 
-#result {
-  margin-top: 5px;
-  min-height: 50px;
-  width: 100%;
-  color: var(--link-color);
-  text-align: left ;
-  padding-left: 10px;
-}
+
 
 
 /* Grid styles (no changes required) */
@@ -204,34 +193,50 @@ button {
   grid-row: 5 / span 7;
 }
 
+.discovery__results li {
+  list-style-type: none;
+  color: #00B7FF;
+  padding: 10px;
+  margin-bottom: 5px;
+  border: 1px solid #cdcdcd;
+}
+
+.pagination__container {
+  list-style-type: none;
+  color: #000000;
+  padding: 10px;
+  grid-column: 1 / span 1;
+  grid-row: 13 / span 1;
+}
+
+#previousGeoPage {
+  color: #000000;
+  border: 1px solid #cdcdcd;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-bottom: 2px;
+}
+
+#previousGeoPage:hover {
+  color: #cdcdcd;
+}
+
+#nextGeoPage {
+  color: #000000;
+  border: 1px solid #cdcdcd;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-bottom: 2px;
+}
+
+#nextGeoPage:hover {
+  color: #cdcdcd;
+}
+
 #map {
   grid-column: 2 / -1;
   grid-row: 5 / span 7;
   margin-left: 50px;
-  color: #666;
-}
-
-.discovery__results {
-  list-style: none; /* Entfernt die Punkte */
-    padding: 0;       /* Entfernt den Standard-Einzug */
-    margin: 0;        /* Entfernt den Standard-Abstand */
-}
-
-.discovery__results li {
-  min-height: 50px;
-  margin-top: 20px;
-  margin-left: 15px;
-  margin-right: 30px;
-  margin-bottom: 10px;
-  padding-right: 10px;
-  padding-top:5px ;
-  width: 100%;
-  color: #00B7FF;
-  background-color: var(--background-color);
-  text-align: center;
-  border-radius: 1px;
-  border-color: var(--border-color);
-  border-style: solid ;
 }
 
 
@@ -262,6 +267,4 @@ button {
     grid-column: 3 / span 10;
     grid-row: 5 / span 7;
   }
-
-  
-  }
+}
