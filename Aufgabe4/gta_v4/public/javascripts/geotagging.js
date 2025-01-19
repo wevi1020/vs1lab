@@ -31,7 +31,6 @@ const mng = new MapManager();
 const maxGeoTagsNumber = 4;
 var pageCounter = 0;
 var pageNumber = 0;
-var allTags = [];
 
 function updateLocation(dataTags) {
      // Lese die aktuellen Werte der Formularfelder für die Koordinaten
@@ -73,13 +72,13 @@ function locationCallBack(helper) {
     const dataTagsString = mapElement.getAttribute("data-tags");
     let dataTags = [];
     try {
-        allTags = JSON.parse(dataTagsString || "[]"); // Konvertiere JSON-String zu Array
-        calculatePageNumber();
-        dataTags = updateGeoResults();
+        dataTags = JSON.parse(dataTagsString || "[]"); // Konvertiere JSON-String zu Array
+        updatePageLabel(elementNumber);
+        //updateGeoResults(dataTags, dataTags.length);
     } catch (e) {
         console.error("Fehler beim Parsen von data-tags:", e);
     }
-    console.log("GeoTags aus data-tags:", allTags);
+    console.log("GeoTags aus data-tags:", dataTags);
 
     // Initialisiere die Karte
     console.log("Karte wird initialisiert mit:", helper.latitude, helper.longitude);
@@ -132,10 +131,14 @@ async function handleTagFormSubmit(event) {
   
   // Discovery-Form (GET /api/geotags?...)
   // Sucht alle Tags basierend auf dem Keyword + Koordinaten
-  async function handleDiscoverySubmit(event) {
+  function handleDiscoverySubmit(event) {
     // Falls der event-Parameter übergeben wurde (Submit), abbrechen
-    if (event) event.preventDefault();//preventDefault() wird nur aufgerufen wird, wenn tatsächlich ein Ereignisobjekt vorhanden ist
-  
+    if (event) event.preventDefault();//preventDefault() wird nur aufgerufen, wenn tatsächlich ein Ereignisobjekt vorhanden ist
+    pageCounter = 0;
+    searchGeoTags();
+  }
+
+  async function searchGeoTags() {
     const keywordField = document.querySelector("#discoveryFilterForm input[name='keyword']");
     const latField = document.getElementById("oolatitude");
     const lngField = document.getElementById("oolongitude");
@@ -145,10 +148,10 @@ async function handleTagFormSubmit(event) {
     const lng = lngField ? lngField.value : "0";
   
     const radius = 1000; 
-    pageCounter = 0;
   
     // GET-URL zusammenbauen
-    const url = `/api/geotags?searchterm=${encodeURIComponent(keyword)}&latitude=${lat}&longitude=${lng}&radius=${radius}`;
+    const url = `/api/geotags?searchterm=${encodeURIComponent(keyword)}&latitude=${lat}&longitude=${lng}
+                  &radius=${radius}&counter=${pageCounter}&maxNumber=${maxGeoTagsNumber}`;
   
     try {
       const response = await fetch(url); //der Link wird verschickt und auf res gewartet
@@ -156,46 +159,42 @@ async function handleTagFormSubmit(event) {
         throw new Error(`Server error: ${response.status}`);
       }
 
-      allTags = await response.json();
-      console.log("Gefundene Tags:", allTags);
-  
-      calculatePageNumber();
-      let dataTags = updateGeoResults();
-      // Geolocation / Karte updaten
-      updateLocation(dataTags);
-      
+      let doUpdate = true;
+      let foundTags = await response.json();
+      let headers = response.headers;
+      pageNumber = headers.get("pageNumber");
+      let elementNumber = headers.get("elementNumber");
+      console.log("Gefundene Tags:", foundTags);
+      if(pageCounter > 0 && foundTags.length < maxGeoTagsNumber) {
+        //keine weiteren Elemente auf dem Server vorhanden
+        //letzte Elemente sollen angezeigt werden
+        if(foundTags.length == 0){
+          pageCounter--;
+          doUpdate = false;
+        }
+      }
+
+      if(doUpdate)
+        updateGeoResults(foundTags, elementNumber);
+
     } catch (error) {
       console.error("Fehler bei der Discovery-Suche:", error);
     }
   }
 
   //
-  function calculatePageNumber() {
-    pageNumber = Math.floor(allTags.length/maxGeoTagsNumber);
-      if((pageNumber*maxGeoTagsNumber) < allTags.length)
-        pageNumber++;
-  }
-
-  //
-  function updateGeoResults() {
-    let tags = [];
-    var start = pageCounter*maxGeoTagsNumber;
-    var end = start+maxGeoTagsNumber;
-
-    if (end > allTags.length)
-      end = allTags.length;
-
-    console.log("start=", start, " end=", end);
-    //
-    for(let i = start; i < end; i++)
-      tags.push(allTags.at(i));
-
+  function updateGeoResults(tags, elementNumber) {
     // Update der Ergebnisliste
     updateDiscoveryResults(tags);
 
+    updatePageLabel(elementNumber);
+    // Geolocation / Karte updaten
+    updateLocation(tags);
+  }
+
+  function updatePageLabel(elementNumber) {
     var label = document.getElementById("pageDisplay");//Zugriff auf HTML-Dok.
-    label.textContent = `${(pageCounter + 1)}/${pageNumber} (${allTags.length})`; //
-    return tags;
+    label.textContent = `${(pageCounter + 1)}/${pageNumber} (${elementNumber})`; //String
   }
   
   function updateDiscoveryResults(tags) {
@@ -219,19 +218,13 @@ async function handleTagFormSubmit(event) {
   function prevGeoPage(){
     if(pageCounter == 0) return; //Verhindert die Möglichkeit am Anfang ins minus zu gehen
     pageCounter--;
-    let dataTags = updateGeoResults();
-    // Geolocation / Karte updaten
-    updateLocation(dataTags);
+    searchGeoTags();
   }
 
-  
   function nextGeoPage(){
-    if(pageCounter == (pageNumber-1)) return; //Verhindert die Möglichkeit am Ende weiter zu klicken
     console.log("pageCounter=", pageCounter, " pageNumber=", pageNumber);
     pageCounter++;
-    let dataTags = updateGeoResults();
-    // Geolocation / Karte updaten
-    updateLocation(dataTags);
+    searchGeoTags();
   }
   
   /**
@@ -240,13 +233,13 @@ async function handleTagFormSubmit(event) {
      Event-Listener
    * aufruf updateLocation()
    */
-  //Listener wartet, bis das DOM vollständig geladen ist
+  //Beim START des Clients (d.h. beim Laden der Seite) wird der Listener einmal ausgefuehrt
   document.addEventListener("DOMContentLoaded", () => {// "() =>" =: Syntax direkte Implementierung des listeners
     // Tagging-Form
     //Submit-Event-Listener wird zum Tag-Formular hinzugefügt
-    const tagForm = document.getElementById("tag-form");//falls er existiert
+    const tagForm = document.getElementById("tag-form");//gesuchte Element mit der id wird der Variable zugewiesen
     if (tagForm) {
-      tagForm.addEventListener("submit", handleTagFormSubmit);//handleTagFormSubmit wird aufgerufen
+      tagForm.addEventListener("submit", handleTagFormSubmit);//listener "handleTagFormSubmit" wird dem button aus tag-form hinzugefuegt
     }
   
     // Discovery-Form
@@ -274,4 +267,5 @@ async function handleTagFormSubmit(event) {
      }
      // Geolocation / Karte updaten
      updateLocation();
+     searchGeoTags();
   });
