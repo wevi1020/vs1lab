@@ -7,6 +7,7 @@
 // "console.log" writes to the browser's console. 
 // The console window must be opened explicitly in the browser.
 // Try to find this output in the browser...
+
 console.log("The geoTagging script is going to start...");
 
 /**
@@ -24,6 +25,7 @@ console.log("The geoTagging script is going to start...");
  * A function to retrieve the current location and update the page.
  * It is called once the page has been fully loaded.
  */
+
 import LocationHelper from './location-helper.js';
 import MapManager from './map-manager.js';
 
@@ -131,100 +133,106 @@ async function handleTagFormSubmit(event) {
   
   // Discovery-Form (GET /api/geotags?...)
   // Sucht alle Tags basierend auf dem Keyword + Koordinaten
-  function handleDiscoverySubmit(event) {
+
+  function handleDiscoverySubmit(event) { //Vorbereitungsfunktion kein ,,async'' notwendig
+
     // Falls der event-Parameter übergeben wurde (Submit), abbrechen
-    if (event) event.preventDefault();//preventDefault() wird nur aufgerufen, wenn tatsächlich ein Ereignisobjekt vorhanden ist
-    pageCounter = 0;
-    searchGeoTags();
+    if (event) event.preventDefault();//preventDefault() wird nur aufgerufen, wenn tatsächlich ein Ereignisobjekt vorhanden ist; Seite muss nicht neu laden
+    pageCounter = 0; //Suche wird neu gestartet
+    searchGeoTags(); //GeoTags basierend auf den eingegebenen Suchkriterien finden
   }
 
   async function searchGeoTags() {
+  //Eingabefelder abrufen
     const keywordField = document.querySelector("#discoveryFilterForm input[name='keyword']");
     const latField = document.getElementById("oolatitude");
     const lngField = document.getElementById("oolongitude");
-  
+
     const keyword = keywordField ? keywordField.value : ""; //if-else Abfrage
     const lat = latField ? latField.value : "0";
     const lng = lngField ? lngField.value : "0";
-  
     const radius = 1000; 
   
     // GET-URL zusammenbauen
     const url = `/api/geotags?searchterm=${encodeURIComponent(keyword)}&latitude=${lat}&longitude=${lng}
-                  &radius=${radius}&counter=${pageCounter}&maxNumber=${maxGeoTagsNumber}`;
+                  &radius=${radius}&counter=${pageCounter}&maxNumber=${maxGeoTagsNumber}`; //Query-Parameter
   
+    //Fetch Api-um GET-Anfrage an Server zu senden
     try {
-      const response = await fetch(url); //der Link wird verschickt und auf res gewartet
-      if (!response.ok) {
+      const response = await fetch(url); //Sendet asynchrone GET-Anfrage an definierte URL, wartet auf Serverantwort
+      if (!response.ok) { // Prüft ob erfolgreich
         throw new Error(`Server error: ${response.status}`);
       }
 
       let doUpdate = true;
-      let foundTags = await response.json();
-      let headers = response.headers;
-      pageNumber = headers.get("pageNumber");
-      let elementNumber = headers.get("elementNumber");
+      //JSON-Extraktion
+      let foundTags = await response.json(); //Konvertiert Serverantwort direkt in JavaScript-Objekt; await wartet auf Abschluss der JSON-Konvertierung
+      let headers = response.headers; //Extrahiert Zusatzinformationen aus Response-Headern
+      pageNumber = headers.get("pageNumber"); //Holt Seitennummer
+      let elementNumber = headers.get("elementNumber"); //Holt Elementanzahl
       console.log("Gefundene Tags:", foundTags);
-      if(pageCounter > 0 && foundTags.length < maxGeoTagsNumber) {
-        //keine weiteren Elemente auf dem Server vorhanden
-        //letzte Elemente sollen angezeigt werden
-        if(foundTags.length == 0){
-          pageCounter--;
-          doUpdate = false;
+
+      if(pageCounter > 0 && foundTags.length < maxGeoTagsNumber) { //nicht mehr auf der erdten Seite und weniger Tags gefunden werden als die maximale Seitengröße
+       
+        if(foundTags.length == 0){ //keine Tags gefunden 
+          pageCounter--;  //Seite ein Schritt zurück 
+          doUpdate = false; //keine Aktualisierung der Anzeige 
         }
       }
 
-      if(doUpdate)
-        updateGeoResults(foundTags, elementNumber);
+      if(doUpdate)//Aktualisierung der Ergebnisse
+        updateGeoResults(foundTags, elementNumber); //Übergibt gefundene Tags, Elementanzahl
 
     } catch (error) {
       console.error("Fehler bei der Discovery-Suche:", error);
     }
   }
 
-  //
-  function updateGeoResults(tags, elementNumber) {
-    // Update der Ergebnisliste
-    updateDiscoveryResults(tags);
-
-    updatePageLabel(elementNumber);
-    // Geolocation / Karte updaten
-    updateLocation(tags);
+  //Discovery-Widgets
+  function updateGeoResults(tags, elementNumber) { //Array mit gefundenen Geotags/Gesamtzahl der Elemente
+    updateDiscoveryResults(tags); // Update der Ergebnisliste; Rendert
+    updatePageLabel(elementNumber); //aktualisiert Beschriftung/Navigation 
+    updateLocation(tags);  // Geolocation / Karte updaten ; Rendert Marker/Position
   }
 
+  //Aktualisiert Seitennavigationsanzeige 
   function updatePageLabel(elementNumber) {
-    var label = document.getElementById("pageDisplay");//Zugriff auf HTML-Dok.
-    label.textContent = `${(pageCounter + 1)}/${pageNumber} (${elementNumber})`; //String
+    var label = document.getElementById("pageDisplay");//Zugriff auf HTML-Dok. mit ,,pageDisplay''
+    label.textContent = `${(pageCounter + 1)}/${pageNumber} (${elementNumber})`; //Formatiert Text "aktuelle Seite/Gesamtseiten (Gesamtelemente)"
   }
   
+  //Aktualisiert die Liste der Discovery-Ergebnisse dynamisch
   function updateDiscoveryResults(tags) {
-    const list = document.getElementById("discoveryResults");
-    if (!list) return;
+    const list = document.getElementById("discoveryResults"); //Holt Listenelement 
+    if (!list) return; //Bricht ab, wenn Element nicht existiert/ Liste leeren
   
-    list.innerHTML = ""; // alle löschen
+    list.innerHTML = ""; // löscht alle bisherigen Einträge
   
-    if (!tags || tags.length === 0) {
+    if (!tags || tags.length === 0) { //stoppt Verarbeitung bei keinen Tags
       //list.innerHTML = "<li>Keine Tags gefunden</li>";
       return;
     }
   
+    //Erstellt Listeneinträge für jeden Tag
     tags.forEach(tag => {
       const li = document.createElement("li");
-      li.textContent = `${tag.name} (${tag.latitude}, ${tag.longitude}) ${tag.hashtag}`;
+      li.textContent = `${tag.name} (${tag.latitude}, ${tag.longitude}) ${tag.hashtag}`; //zeigt Name, Koordinaten, Hashtag
       list.appendChild(li);
     });
   }
 
+  //geht eine Seite zurück
   function prevGeoPage(){
-    if(pageCounter == 0) return; //Verhindert die Möglichkeit am Anfang ins minus zu gehen
-    pageCounter--;
-    searchGeoTags();
+    if(pageCounter == 0) return; //stoppt am Anfang (geht nicht in minus)
+    pageCounter--; 
+    searchGeoTags(); //erneute Suche 
   }
 
+  //geht eine Seite vor
   function nextGeoPage(){
-    console.log("pageCounter=", pageCounter, " pageNumber=", pageNumber);
+    console.log("pageCounter=", pageCounter, " pageNumber=", pageNumber); //Logging der aktuellen Seitennavigation
     pageCounter++;
-    searchGeoTags();
+    searchGeoTags(); //erneute Suche
   }
   
   /**
@@ -233,8 +241,10 @@ async function handleTagFormSubmit(event) {
      Event-Listener
    * aufruf updateLocation()
    */
+
   //Beim START des Clients (d.h. beim Laden der Seite) wird der Listener einmal ausgefuehrt
   document.addEventListener("DOMContentLoaded", () => {// "() =>" =: Syntax direkte Implementierung des listeners
+    
     // Tagging-Form
     //Submit-Event-Listener wird zum Tag-Formular hinzugefügt
     const tagForm = document.getElementById("tag-form");//gesuchte Element mit der id wird der Variable zugewiesen
@@ -248,16 +258,14 @@ async function handleTagFormSubmit(event) {
       discoveryForm.addEventListener("submit", handleDiscoverySubmit);
     }
 
-     //
      const prevLink = document.getElementById("previousGeoPage");
      if (prevLink) {
        prevLink.addEventListener("click", function(event) {
-         event.preventDefault();//Ausfuehrung des Standardverhaltens dieses Events wird verhindert (da kein Link angegeben wurde springt es nicht mehr rum)
+         event.preventDefault();//Ausführung des Standardverhaltens dieses Events wird verhindert (da kein Link angegeben wurde springt es nicht mehr rum)
          prevGeoPage();
        });
      }
  
-     //
      const nextLink = document.getElementById("nextGeoPage");
      if (nextLink) {
        nextLink.addEventListener("click", function(event) {
@@ -265,6 +273,7 @@ async function handleTagFormSubmit(event) {
          nextGeoPage();
        });
      }
+
      // Geolocation / Karte updaten
      updateLocation();
      searchGeoTags();

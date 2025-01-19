@@ -35,7 +35,7 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 
 // Set content processing
-app.use(express.json());
+app.use(express.json()); //Middleware um JASON zu verwenden
 app.use(express.urlencoded({ extended: false }));
 
 /**

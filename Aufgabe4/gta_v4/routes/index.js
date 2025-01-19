@@ -17,6 +17,7 @@ const router = express.Router();
  * The module "geotag" exports a class GeoTagStore. 
  * It represents geotags.
  */
+
 // eslint-disable-next-line no-unused-vars
 const GeoTag = require('../models/geotag');
 
@@ -24,6 +25,7 @@ const GeoTag = require('../models/geotag');
  * The module "geotag-store" exports a class GeoTagStore. 
  * It provides an in-memory store for geotag objects.
  */
+
 // eslint-disable-next-line no-unused-vars
 const GeoTagExamples = require('../models/geotag-examples');
 const GeoTagStore = require('../models/geotag-store');
@@ -62,6 +64,7 @@ router.get('/', (req, res) => {
       searchLatitude:latitude,
       searchLongitude:longitude });
     console.log("An die EJS-Datei übergebene Tags:", subTags);
+    
 });
 
 /** (A3)
@@ -79,6 +82,7 @@ router.get('/', (req, res) => {
  * To this end, "GeoTagStore" provides methods to search geotags 
  * by radius and keyword.
  */
+
 //POST = suche "search-request"
 router.post('/discovery', (req, res) => {//req = stehen Daten vom Client; res = Server schick Daten zum Client
   console.log("Formulardaten:", req.body);
@@ -113,6 +117,7 @@ router.post('/discovery', (req, res) => {//req = stehen Daten vom Client; res = 
       searchLatitude,
       searchLongitude 
     });
+
 });
 
 // API routes (A4)
@@ -128,48 +133,54 @@ router.post('/discovery', (req, res) => {//req = stehen Daten vom Client; res = 
  * If 'searchterm' is present, it will be filtered by search term.
  * If 'latitude' and 'longitude' are available, it will be further filtered based on radius.
  */
+
 //GeoTag-Suche
 router.get('/api/geotags', (req, res) => {
   console.log("Suchdaten:", req.query);
+
   // Mögliche Query-Parameter
-  const searchTerm = req.query.searchterm || "";
+  const searchTerm = req.query.searchterm || ""; //req.query.searchterm existiert wird dessen Wert searchTerm zugewiesen ansonsten leerer String
   const latitude = parseFloat(req.query.latitude) || 49.01379; //String in Float parsen
   const longitude = parseFloat(req.query.longitude) || 8.390071;
   const radius = parseFloat(req.query.radius) || 1000;
-
   const counter = parseInt(req.query.counter) || 0;
   const maxNumber = parseInt(req.query.maxNumber) || 0;
+
   // Filter via searchNearbyGeoTags
-  const tags = store.searchNearbyGeoTags(latitude, longitude, radius, searchTerm);
+  const tags = store.searchNearbyGeoTags(latitude, longitude, radius, searchTerm); //geografische Suche nach Tags
   console.log("Gefundene Tags (nach Filterung):", tags);
 
-  const subTags = getSubTags(tags, counter, maxNumber, res);
+  const subTags = getSubTags(tags, counter, maxNumber, res); //bestimmte Anzahl von Tags aus einer größeren Sammlung auszuwählen
   res.json(subTags);// Rückgabe als JSON
+
 });
 
+//Aufgabe 4 Zusatz
 function getSubTags(tags, counter, maxNumber, res){
-  res.setHeader("elementNumber", tags.length);
-  if(maxNumber > 0){ //sorgt dafuer, dass nur die maxNumber zurueckgegeben wird
-    let subTags = [];
-    var start = counter*maxNumber;
-    var end = start+maxNumber;
+  res.setHeader("elementNumber", tags.length); //Setzt einen HTTP-Header, der die Gesamtanzahl der Tags angibt
 
-    if (end > tags.length)
+  if(maxNumber > 0){ //Prüft, ob eine maximale Anzahl von Tags pro Seite festgelegt ist
+    let subTags = []; //Initialisiert ein Array für die ausgewählten Tags
+    var start = counter*maxNumber; //Berechnet den Startindex
+    var end = start+maxNumber; //Berechnet den Endindex
+
+    if (end > tags.length) //Stellt sicher, dass der Endindex nicht über die Gesamtanzahl der Tags hinausgeht
       end = tags.length;
 
     console.log("start=", start, " end=", end);
-    //
-    for(let i = start; i < end; i++)
+    
+    for(let i = start; i < end; i++) //Fügt die ausgewählten Tags zum subTags-Array hinzu
       subTags.push(tags.at(i));
 
-    let pageNumber = Math.floor(tags.length/maxNumber);
+    //Berechnung der Seitenzahl
+    let pageNumber = Math.floor(tags.length/maxNumber); //Berechnet die Gesamtanzahl der Seiten und rundet auf, falls nötig
     if((pageNumber*maxNumber) < tags.length)
       pageNumber++;
 
-    res.setHeader("pageNumber", pageNumber);
+    res.setHeader("pageNumber", pageNumber); //Setzt einen HTTP-Header mit der berechneten Seitenzahl
     return subTags;
   }
-  res.setHeader("pageNumber", 0);
+  res.setHeader("pageNumber", 0); //Setzt den HTTP-Header "pageNumber" auf 0
   return tags;
 }
 
@@ -185,8 +196,10 @@ function getSubTags(tags, counter, maxNumber, res){
  * The URL of the new resource is returned in the header as a response.
  * The new resource is rendered as JSON in the response.
  */
+
   //POST = Daten erstellen | Hinzufuegen eines GeoTags
 router.post('/api/geotags', (req, res) => {
+
   // Daten aus dem JSON-Body
   const { name, latitude, longitude, hashtag } = req.body;//direkter Zugriff auf die Variable, ohne req.body jedes Mal neu zu referenzieren
 
@@ -197,6 +210,7 @@ router.post('/api/geotags', (req, res) => {
 
   // Neues Tag anlegen
   const newTag = store.addGeoTag(new GeoTag(name, latitude, longitude, hashtag));
+
   // Antwort mit Status 201 (Created)
   res
     .status(201) //Setzt den HTTP-Statuscode der Antwort auf 201 "created = wurde erfolgreich erstellt"
@@ -214,15 +228,16 @@ router.post('/api/geotags', (req, res) => {
  *
  * The requested tag is rendered as JSON in the response.
  */
+
 router.get('/api/geotags/:id', (req, res) => {
   const id = parseInt(req.params.id); //String in int parsen
-  const foundTag = store.getGeoTagById(id);
+  const foundTag = store.getGeoTagById(id); //Ruft die Methode getGeoTagById des store-Objekts auf, um das Tag mit der gegebenen ID zu finden
 
   if (!foundTag) {
     return res.status(404).json({ error: 'Tag not found' });
   }
 
-  res.json(foundTag);
+  res.json(foundTag); //Sendet das gefundene Tag als JSON-Antwort zurück
 });
 
 /**
@@ -238,19 +253,14 @@ router.get('/api/geotags/:id', (req, res) => {
  * Changes the tag with the corresponding ID to the sent value.
  * The updated resource is rendered as JSON in the response. 
  */
-//PUT = Daten aktualisieren/aendern
+
+//PUT = Daten aktualisieren/ändern
 router.put('/api/geotags/:id', (req, res) => {
   const id = parseInt(req.params.id);
 
   // Neue Daten aus dem Body
   const { name, latitude, longitude, hashtag } = req.body;//direkter Zugriff auf die Variable, ohne req.body jedes Mal neu zu referenzieren
-
-  const updatedTag = store.updateGeoTagById(id, {
-    name,
-    latitude,
-    longitude,
-    hashtag
-  });
+  const updatedTag = store.updateGeoTagById(id, {name, latitude, longitude, hashtag});
 
   if (!updatedTag) {
     return res.status(404).json({ error: 'Tag not found' });
@@ -269,6 +279,7 @@ router.put('/api/geotags/:id', (req, res) => {
  * Deletes the tag with the corresponding ID.
  * The deleted resource is rendered as JSON in the response.
  */
+
 router.delete('/api/geotags/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const deleted = store.removeGeoTagById(id);
@@ -277,7 +288,7 @@ router.delete('/api/geotags/:id', (req, res) => {
     return res.status(404).json({ error: 'Tag not found' });
   }
 
-  res.json(deleted);
+  res.sendStatus(204); //// Sendet 204 ohne Ressourcenbschreibung
 });
 
 module.exports = router;
